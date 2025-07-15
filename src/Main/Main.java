@@ -21,6 +21,8 @@ public class Main {
         window.setLocationRelativeTo(null); //ponerlo en null significa que va a ir en el centro
         window.setVisible(true); //para poder ver la ventana
 
+        panel.startGameThread();
+
 
 
 
