@@ -12,8 +12,8 @@ public class PanelJuego extends JPanel implements Runnable {
     final int scale = 3; //escalado de tamano
 
     public final int tileSize = originalTileSize * scale; //tamano despues del escalado
-    final int maxScreenCol = 16; //numero de columnas
-    final int maxScreenRow = 12; //numero de filas
+    final int maxScreenCol = 32; //numero de columnas
+    final int maxScreenRow = 24; //numero de filas
     final int screenWidth = tileSize * maxScreenCol; //ancho de pantalla: 1536 pixeles
     final int screenHeight = tileSize * maxScreenRow; //largo de pantalla: 1152 pixeles
 
