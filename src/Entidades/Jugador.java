@@ -6,6 +6,7 @@ import Main.PanelJuego;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 import java.io.IOException;
 
 public class Jugador extends Entidad {
@@ -13,16 +14,26 @@ public class Jugador extends Entidad {
     PanelJuego panel;
     InputHandler inputH;
 
+
+    public final int screenX;
+    public final int screenY;
+
     public Jugador(PanelJuego panel, InputHandler inputH) {
         this.panel = panel;
         this.inputH = inputH;
 
+        screenX = panel.screenWidth/2 - (panel.tileSize/2);
+        screenY = panel.screenHeight/2- (panel.tileSize/2);
+
         setDefaultValues(); //valores base
         getPlayerImage(); //imagenes
     }
+
+
+
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        worldX = panel.tileSize * 11;
+        worldY = panel.tileSize * 11;
         speed = 4;
         direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
@@ -84,8 +95,8 @@ public class Jugador extends Entidad {
             dx /= length;
             dy /= length;
 
-            x += dx * speed;
-            y += dy * speed;
+            worldX += dx * speed;
+            worldY += dy * speed;
 
             direction = lastHorizontalDirection;
         }
@@ -133,7 +144,7 @@ public class Jugador extends Entidad {
             }
         }
 
-        g2.drawImage(imagen, x, y, panel.tileSize, panel.tileSize, null);
+        g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
 
 

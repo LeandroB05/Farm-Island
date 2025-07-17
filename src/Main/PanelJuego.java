@@ -18,6 +18,9 @@ public class PanelJuego extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; //ancho de pantalla: 1536 pixeles
     public final int screenHeight = tileSize * maxScreenRow; //largo de pantalla: 1152 pixeles
 
+    //Ajustes del Mundo
+
+
     int FPS = 60;
 
     TileManager tileM = new TileManager(this);

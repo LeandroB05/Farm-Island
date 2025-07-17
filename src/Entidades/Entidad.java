@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Entidad {
 
-    public int x, y; //ejes para el movimiento
+    public int worldX, worldY; //ejes para el movimiento
     public int speed;  //velocidad
     boolean idle; //Comprobar si esta quieto o no
     String lastHorizontalDirection = "derecha";  // Comprobar ultimo sentido en que se direcciono el personaje
