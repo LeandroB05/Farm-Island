@@ -1,6 +1,7 @@
 package Main;
 
 import Entidades.Jugador;
+import Tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,24 +13,17 @@ public class PanelJuego extends JPanel implements Runnable {
     final int scale = 3; //escalado de tamano
 
     public final int tileSize = originalTileSize * scale; //tamano despues del escalado
-    final int maxScreenCol = 32; //numero de columnas
-    final int maxScreenRow = 24; //numero de filas
-    final int screenWidth = tileSize * maxScreenCol; //ancho de pantalla: 1536 pixeles
-    final int screenHeight = tileSize * maxScreenRow; //largo de pantalla: 1152 pixeles
+    public final int maxScreenCol = 32; //numero de columnas
+    public final int maxScreenRow = 18; //numero de filas
+    public final int screenWidth = tileSize * maxScreenCol; //ancho de pantalla: 1536 pixeles
+    public final int screenHeight = tileSize * maxScreenRow; //largo de pantalla: 1152 pixeles
 
     int FPS = 60;
 
-
+    TileManager tileM = new TileManager(this);
     InputHandler inputH = new InputHandler(); //clase para manejar las acciones del usuario
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
     Jugador jugador1 = new Jugador(this,inputH);  //instanciar clase Jugador
-
-    //Posicion predeterminada del jugador
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
-
-
 
     public PanelJuego() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //setear el tamano de la clase con el ancho y el largo
@@ -85,6 +79,7 @@ public class PanelJuego extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g; //estamos cambiando una clase por otra, las 2da permite mejor control de geometria, posicion etc
 
+        tileM.draw(g2);
         jugador1.draw(g2);
 
         g2.dispose();
