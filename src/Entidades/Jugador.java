@@ -25,7 +25,7 @@ public class Jugador extends Entidad {
         x = 100;
         y = 100;
         speed = 4;
-        direction = "arriba";
+        direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
     }
     public void getPlayerImage(){ //Obtener la ruta de las imagenes
