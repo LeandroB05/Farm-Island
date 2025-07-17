@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 
 public class Entidad {
 
-    public int x, y;
-    public int speed;
+    public int x, y; //ejes para el movimiento
+    public int speed;  //velocidad
+    boolean idle; //Comprobar si esta quieto o no
+    String lastHorizontalDirection = "derecha";  // Comprobar ultimo sentido en que se direcciono el personaje
 
-    public BufferedImage left1,left2,left3,left4,left5,left6,left7,left8, right1,right2,right3,right4,right5,right6,right7,right8;
+    public BufferedImage left1,left2,left3,left4, right1,right2,right3,right4,idleR1, idleR2, idleR3, idleR4, idleL1, idleL2, idleL3, idleL4;
     public String direction;
 
     public int spriteCounter = 0;

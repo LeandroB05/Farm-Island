@@ -26,6 +26,7 @@ public class Jugador extends Entidad {
         y = 100;
         speed = 4;
         direction = "arriba";
+        idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
     }
     public void getPlayerImage(){ //Obtener la ruta de las imagenes
         try{
@@ -33,140 +34,108 @@ public class Jugador extends Entidad {
             left2 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left2.png"));
             left3 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left3.png"));
             left4 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left4.png"));
-            left5 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left5.png"));
-            left6 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left6.png"));
-            left7 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left7.png"));
-            left8 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/left8.png"));
 
             right1 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right1.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right2.png"));
             right3 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right3.png"));
             right4 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right4.png"));
-            right5 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right5.png"));
-            right6 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right6.png"));
-            right7 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right7.png"));
-            right8 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/caminar/right8.png"));
+
+            idleR1 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/r.idle1.png"));
+            idleR2 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/r.idle2.png"));
+            idleR3 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/r.idle3.png"));
+            idleR4 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/r.idle4.png"));
+
+            idleL1 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/l.idle1.png"));
+            idleL2 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/l.idle2.png"));
+            idleL3 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/l.idle3.png"));
+            idleL4 = ImageIO.read(getClass().getResourceAsStream("../sprites/jugador/quieto/l.idle4.png"));
+
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
     public void update() {
+        double dx = 0;
+        double dy = 0;
 
-        if (inputH.upPressed) {
-            direction = "arriba";
-            y -= speed;
-        } else if (inputH.downPressed) {
-            direction = "abajo";
-            y += speed;
-        } else if (inputH.leftPressed) {
-            direction = "izquierda";
-            x -= speed;
-        } else if (inputH.rightPressed) {
-            direction = "derecha";
-            x += speed;
+        idle = true; // ← reinicia el estado al principio
+
+        if (inputH.upPressed) {   // Recolectar entradas
+            dy -= 1;
+            idle = false;
+        }
+        if (inputH.downPressed) {
+            dy += 1;
+            idle = false;
+        }
+        if (inputH.leftPressed) {
+            dx -= 1;
+            lastHorizontalDirection = "izquierda";
+            idle = false;
+        }
+        if (inputH.rightPressed) {
+            dx += 1;
+            lastHorizontalDirection = "derecha";
+            idle = false;
         }
 
-        // Animación solo si se está moviendo
-        if (inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed) {
-            spriteCounter++;
+        double length = Math.sqrt(dx * dx + dy * dy);  // Normalizar velocidad en diagonal
+        if (length != 0) {
+            dx /= length;
+            dy /= length;
 
-            if (spriteCounter > 10) { // Cambia cada 10 updates (ajustable)
-                spriteNum++;
-                if (spriteNum > 8) {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
-            }
+            x += dx * speed;
+            y += dy * speed;
+
+            direction = lastHorizontalDirection;
+        }
+
+
+        spriteCounter++; // Animación: se actualiza SIEMPRE (incluso en idle)
+
+        int velocidadAnimacion = idle ? 20 : 10;
+
+        if (spriteCounter > velocidadAnimacion) {
+            spriteNum++;
+            if (spriteNum > 4) spriteNum = 1;
+            spriteCounter = 0;
         }
     }
+
+
 
     public void draw(Graphics2D g2) {
+        BufferedImage imagen = null;
 
-        BufferedImage imagen = null;  //Cambiar el sprite del personaje basado en la direccion
-        switch (direction) {
-            case "arriba":
-                if (spriteNum == 1) {
-                    imagen = left1;
-                } else if (spriteNum == 2) {
-                    imagen = left2;
-                } else if (spriteNum == 3) {
-                    imagen = left3;
-                } else if (spriteNum == 4) {
-                    imagen = left4;
-                } else if (spriteNum == 5) {
-                    imagen = left5;
-                } else if (spriteNum == 6) {
-                    imagen = left6;
-                } else if (spriteNum == 7) {
-                    imagen = left7;
-                } else if (spriteNum == 8) {
-                    imagen = left8;
-                }
-                break;
-            case "abajo":
-                if (spriteNum == 1) {
-                    imagen = right1;
-                } else if (spriteNum == 2) {
-                    imagen = right2;
-                } else if (spriteNum == 3) {
-                    imagen = right3;
-                } else if (spriteNum == 4) {
-                    imagen = right4;
-                } else if (spriteNum == 5) {
-                    imagen = right5;
-                } else if (spriteNum == 6) {
-                    imagen = right6;
-                } else if (spriteNum == 7) {
-                    imagen = right7;
-                } else if (spriteNum == 8) {
-                    imagen = right8;
-                }
-                break;
-            case "izquierda":
-                if (spriteNum == 1) {
-                    imagen = left1;
-                } else if (spriteNum == 2) {
-                    imagen = left2;
-                } else if (spriteNum == 3) {
-                    imagen = left3;
-                } else if (spriteNum == 4) {
-                    imagen = left4;
-                } else if (spriteNum == 5) {
-                    imagen = left5;
-                } else if (spriteNum == 6) {
-                    imagen = left6;
-                } else if (spriteNum == 7) {
-                    imagen = left7;
-                } else if (spriteNum == 8) {
-                    imagen = left8;
-                }
-                break;
-            case "derecha":
-                if (spriteNum == 1) {
-                    imagen = right1;
-                } else if (spriteNum == 2) {
-                    imagen = right2;
-                } else if (spriteNum == 3) {
-                    imagen = right3;
-                } else if (spriteNum == 4) {
-                    imagen = right4;
-                } else if (spriteNum == 5) {
-                    imagen = right5;
-                } else if (spriteNum == 6) {
-                    imagen = right6;
-                } else if (spriteNum == 7) {
-                    imagen = right7;
-                } else if (spriteNum == 8) {
-                    imagen = right8;
-                }
-                break;
+        if (idle) {
+            if (direction.equals("derecha")) {
+                if (spriteNum == 1) imagen = idleR1;
+                else if (spriteNum == 2) imagen = idleR2;
+                else if (spriteNum == 3) imagen = idleR3;
+                else if (spriteNum == 4) imagen = idleR4;
+            } else if (direction.equals("izquierda")) {
+                if (spriteNum == 1) imagen = idleL1;
+                else if (spriteNum == 2) imagen = idleL2;
+                else if (spriteNum == 3) imagen = idleL3;
+                else if (spriteNum == 4) imagen = idleL4;
+            }
+        } else {
+            if (direction.equals("derecha")) {
+                if (spriteNum == 1) imagen = right1;
+                else if (spriteNum == 2) imagen = right2;
+                else if (spriteNum == 3) imagen = right3;
+                else if (spriteNum == 4) imagen = right4;
+            } else if (direction.equals("izquierda")) {
+                if (spriteNum == 1) imagen = left1;
+                else if (spriteNum == 2) imagen = left2;
+                else if (spriteNum == 3) imagen = left3;
+                else if (spriteNum == 4) imagen = left4;
+            }
         }
 
-
-        g2.drawImage(imagen, x, y, panel.tileSize, panel.tileSize, null); //Observador de imagenes
-
-
+        g2.drawImage(imagen, x, y, panel.tileSize, panel.tileSize, null);
     }
+
 
 }
