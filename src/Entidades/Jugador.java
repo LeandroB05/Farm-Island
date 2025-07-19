@@ -38,8 +38,8 @@ public class Jugador extends Entidad {
 
 
     public void setDefaultValues(){
-        worldX = panel.tileSize * 11;
-        worldY = panel.tileSize * 11;
+        worldX = panel.tileSize * 20;
+        worldY = panel.tileSize * 20;
         speed = 7;
         direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
