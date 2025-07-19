@@ -21,7 +21,7 @@ public class PanelJuego extends JPanel implements Runnable {
     //Ajustes del Mundo
 
     public final int maxWorldCol = 42;  //temporal
-    public final int maxWorldRow = 42;  //temporal, agregar sprites con colision a los border para que no se salg del mapa
+    public final int maxWorldRow = 44;  //temporal, agregar sprites con colision a los border para que no se salg del mapa
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 

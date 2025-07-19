@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        JFrame window = new JFrame(); //crear nueva ventana
+        JFrame window = new JFrame(); //crear nueva ventanassswwds
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //para que aparezca el boton de cerrar
         window.setResizable(false); //no cambiar el tamano de la ventana
         window.setTitle("ProyectoGranja"); //titulo de la ventana

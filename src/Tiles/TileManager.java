@@ -28,9 +28,10 @@ public class TileManager {
             tile[0].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Fondo/grass2.png"));
             tile[1] = new Tile();
             tile[1].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirt1.png"));
+            tile[1].collision = true;
             tile[2] = new Tile();
             tile[2].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/water1.png"));
-            tile[2].collision = true;  // para anadirle colision a cualquier tile que queramos
+            tile[2].collision = true;  // para anadirle colision a cualquier tile que querramos
             tile[3] = new Tile();
             tile[3].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/wall1.png"));
             tile[4] = new Tile();
@@ -71,6 +72,9 @@ public class TileManager {
             tile[21].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/pathBR.png"));
             tile[22] = new Tile();
             tile[22].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/path1.png"));
+            tile[23] = new Tile();
+            tile[23].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/sand1.png"));
+            tile[24] = new Tile();
 
 
         }catch(IOException e){
