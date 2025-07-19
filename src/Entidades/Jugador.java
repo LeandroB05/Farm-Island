@@ -25,6 +25,12 @@ public class Jugador extends Entidad {
         screenX = panel.screenWidth/2 - (panel.tileSize/2);
         screenY = panel.screenHeight/2- (panel.tileSize/2);
 
+        solidArea = new Rectangle();
+        solidArea.x = 9;
+        solidArea.y = 24;
+        solidArea.width = 27;
+        solidArea.height = 24;
+
         setDefaultValues(); //valores base
         getPlayerImage(); //imagenes
     }
@@ -34,7 +40,7 @@ public class Jugador extends Entidad {
     public void setDefaultValues(){
         worldX = panel.tileSize * 11;
         worldY = panel.tileSize * 11;
-        speed = 4;
+        speed = 7;
         direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
     }
@@ -69,43 +75,59 @@ public class Jugador extends Entidad {
         double dx = 0;
         double dy = 0;
 
-        idle = true; // ← reinicia el estado al principio
+        idle = true; // reiniciar estado
 
-        if (inputH.upPressed) {   // Recolectar entradas
+        if (inputH.upPressed) {
             dy -= 1;
+            direction = "arriba";
             idle = false;
         }
         if (inputH.downPressed) {
             dy += 1;
+            direction = "abajo";
             idle = false;
         }
         if (inputH.leftPressed) {
             dx -= 1;
             lastHorizontalDirection = "izquierda";
+            direction = "izquierda";
             idle = false;
         }
         if (inputH.rightPressed) {
             dx += 1;
             lastHorizontalDirection = "derecha";
+            direction = "derecha";
             idle = false;
         }
 
-        double length = Math.sqrt(dx * dx + dy * dy);  // Normalizar velocidad en diagonal
+        //normalizar para no ir más rápido en diagonal
+        double length = Math.sqrt(dx * dx + dy * dy);
         if (length != 0) {
-            dx /= length;
-            dy /= length;
-
-            worldX += dx * speed;
-            worldY += dy * speed;
-
-            direction = lastHorizontalDirection;
+            dx = (dx / length) * speed;
+            dy = (dy / length) * speed;
         }
 
+        if (dx != 0) {
+            direction = dx < 0 ? "izquierda" : "derecha"; //actualizar direction
+            collisionOn = false;
+            panel.hitbox.checkCollision(this);
+            if (!collisionOn) {  //moverse solo si no hay colision
+                worldX += dx;
+            }
+        }
 
-        spriteCounter++; // Animación: se actualiza SIEMPRE (incluso en idle)
+        if (dy != 0) {
+            direction = dy < 0 ? "arriba" : "abajo";
+            collisionOn = false;
+            panel.hitbox.checkCollision(this);
+            if (!collisionOn) { //moverse solo si no hay colision
+                worldY += dy;
+            }
+        }
 
+        // Animación
+        spriteCounter++;
         int velocidadAnimacion = idle ? 20 : 10;
-
         if (spriteCounter > velocidadAnimacion) {
             spriteNum++;
             if (spriteNum > 4) spriteNum = 1;
@@ -115,28 +137,30 @@ public class Jugador extends Entidad {
 
 
 
+
+
     public void draw(Graphics2D g2) {
         BufferedImage imagen = null;
 
         if (idle) {
-            if (direction.equals("derecha")) {
+            if (lastHorizontalDirection.equals("derecha")) {
                 if (spriteNum == 1) imagen = idleR1;
                 else if (spriteNum == 2) imagen = idleR2;
                 else if (spriteNum == 3) imagen = idleR3;
                 else if (spriteNum == 4) imagen = idleR4;
-            } else if (direction.equals("izquierda")) {
+            } else if (lastHorizontalDirection.equals("izquierda")) {
                 if (spriteNum == 1) imagen = idleL1;
                 else if (spriteNum == 2) imagen = idleL2;
                 else if (spriteNum == 3) imagen = idleL3;
                 else if (spriteNum == 4) imagen = idleL4;
             }
         } else {
-            if (direction.equals("derecha")) {
+            if (direction.equals("derecha") || (direction.equals("abajo") && lastHorizontalDirection.equals("derecha")) || (direction.equals("arriba") && lastHorizontalDirection.equals("derecha"))) {
                 if (spriteNum == 1) imagen = right1;
                 else if (spriteNum == 2) imagen = right2;
                 else if (spriteNum == 3) imagen = right3;
                 else if (spriteNum == 4) imagen = right4;
-            } else if (direction.equals("izquierda")) {
+            } else if (direction.equals("izquierda") || (direction.equals("abajo") && lastHorizontalDirection.equals("izquierda")) || (direction.equals("arriba") && lastHorizontalDirection.equals("izquierda"))) {
                 if (spriteNum == 1) imagen = left1;
                 else if (spriteNum == 2) imagen = left2;
                 else if (spriteNum == 3) imagen = left3;

@@ -20,13 +20,20 @@ public class PanelJuego extends JPanel implements Runnable {
 
     //Ajustes del Mundo
 
+    public final int maxWorldCol = 42;  //temporal
+    public final int maxWorldRow = 42;  //temporal, agregar sprites con colision a los border para que no se salg del mapa
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
 
     int FPS = 60;
 
     TileManager tileM = new TileManager(this);
     InputHandler inputH = new InputHandler(); //clase para manejar las acciones del usuario
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
-    Jugador jugador1 = new Jugador(this,inputH);  //instanciar clase Jugador
+    public  CollisionChecker hitbox = new CollisionChecker(this);
+    public Jugador jugador1 = new Jugador(this,inputH);  //instanciar clase Jugador
+
 
     public PanelJuego() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //setear el tamano de la clase con el ancho y el largo
@@ -82,6 +89,7 @@ public class PanelJuego extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g; //estamos cambiando una clase por otra, las 2da permite mejor control de geometria, posicion etc
 
+        setBackground(new Color(36, 172, 228));
         tileM.draw(g2);
         jugador1.draw(g2);
 

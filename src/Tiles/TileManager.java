@@ -9,16 +9,16 @@ import java.io.*;
 public class TileManager {
 
     PanelJuego panel;
-    Tile[] tile;
-    int mapaTileNumber[][];
+    public Tile[] tile;
+    public int[][] mapaTileNumber;
 
     public TileManager(PanelJuego panel) {
         this.panel = panel;
         tile = new Tile[50];  //cantidad de tiles que necesitamos, de agua, tierra, etc(anadir mas si se necesitan)
-        mapaTileNumber = new int[panel.maxScreenCol][panel.maxScreenRow];
+        mapaTileNumber = new int[panel.maxWorldCol][panel.maxWorldRow];
 
         getTileImage();
-        loadMap("../Sprites/Mapas/mapa01.txt");
+        loadMap("../Sprites/Mapas/mundo01.txt");
     }
 
     public void getTileImage(){
@@ -30,6 +30,7 @@ public class TileManager {
             tile[1].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirt1.png"));
             tile[2] = new Tile();
             tile[2].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/water1.png"));
+            tile[2].collision = true;  // para anadirle colision a cualquier tile que queramos
             tile[3] = new Tile();
             tile[3].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/wall1.png"));
             tile[4] = new Tile();
@@ -71,12 +72,13 @@ public class TileManager {
             tile[22] = new Tile();
             tile[22].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/path1.png"));
 
+
         }catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public void loadMap(String filePath){
+    public void loadMap(String filePath){   //metodo para cargar el mapa del juego
         try{
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -84,10 +86,10 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < panel.maxScreenCol && row < panel.maxScreenRow){
+            while(col < panel.maxWorldCol && row < panel.maxWorldRow){
                 String line = reader.readLine();
 
-                while(col < panel.maxScreenCol){
+                while(col < panel.maxWorldCol){
                     String numbers[] = line.split(" ");
 
                     int num = Integer.parseInt(numbers[col]);
@@ -95,7 +97,7 @@ public class TileManager {
                     mapaTileNumber[col][row] = num;
                     col++;
                 }
-                if(col == panel.maxScreenCol){
+                if(col == panel.maxWorldCol){
                     col = 0;
                     row++;
                 }
@@ -108,24 +110,25 @@ public class TileManager {
 
     public void draw(Graphics2D g2){
 
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldCol = 0;
+        int worldRow = 0;
 
-        while(col < panel.maxScreenCol && row < panel.maxScreenRow){
+        while(worldCol < panel.maxWorldCol && worldRow < panel.maxWorldRow){
 
-            int tileNum =  mapaTileNumber[col][row];
+            int tileNum =  mapaTileNumber[worldCol][worldRow]; //imagen que va a mostrar, agrarra del arreglo de imagenes
 
-            g2.drawImage(tile[tileNum].imagen, x, y, panel.tileSize, panel.tileSize, null);
-            col++;
-            x += panel.tileSize;
+            int worldX = worldCol * panel.tileSize;  //detecta posicion en el MAPA para pintar
+            int worldY = worldRow * panel.tileSize;  //detecta posicion en el MAPA para pintar
+            int screenX = worldX - panel.jugador1.worldX + panel.jugador1.screenX;  //detecta posicion en PANTALLA para mostrar
+            int screenY = worldY - panel.jugador1.worldY + panel.jugador1.screenY;  //detecta posicion en PANTALLA para mostrar
 
-            if(col == panel.maxScreenCol){
-                col = 0;
-                x =0;
-                row++;
-                y += panel.tileSize;
+            g2.drawImage(tile[tileNum].imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
+
+            worldCol++;
+
+            if(worldCol == panel.maxWorldCol){
+                worldCol = 0;
+                worldRow++;
             }
         }
 
