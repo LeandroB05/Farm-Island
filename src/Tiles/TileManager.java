@@ -4,21 +4,25 @@ import Main.PanelJuego;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class TileManager {
 
     PanelJuego panel;
     public Tile[] tile;
-    public int[][] mapaTileNumber;
+    public int[][] mapaTileNumber;    // Terreno base
+    public int[][] objetoTileNumber;  // Objetos encima del terreno
 
     public TileManager(PanelJuego panel) {
         this.panel = panel;
-        tile = new Tile[50];  //cantidad de tiles que necesitamos, de agua, tierra, etc(anadir mas si se necesitan)
+        tile = new Tile[50];
         mapaTileNumber = new int[panel.maxWorldCol][panel.maxWorldRow];
+        objetoTileNumber = new int[panel.maxWorldCol][panel.maxWorldRow];
 
         getTileImage();
-        loadMap("../Sprites/Mapas/mundo01.txt");
+        loadMap("../Sprites/Mapas/mundo01.txt", mapaTileNumber);
+        loadMap("../Sprites/Mapas/objetos01.txt", objetoTileNumber);
     }
 
     public void getTileImage(){
@@ -75,6 +79,12 @@ public class TileManager {
             tile[23] = new Tile();
             tile[23].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/sand1.png"));
             tile[24] = new Tile();
+            tile[24].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirtL.png"));
+            tile[25] = new Tile();
+            tile[25].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirtR.png"));
+            tile[26] = new Tile();
+            tile[26].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/sandWaterT.png"));
+
 
 
         }catch(IOException e){
@@ -82,7 +92,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath){   //metodo para cargar el mapa del juego
+    public void loadMap(String filePath, int[][] targetArray){
         try{
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -92,13 +102,10 @@ public class TileManager {
 
             while(col < panel.maxWorldCol && row < panel.maxWorldRow){
                 String line = reader.readLine();
-
                 while(col < panel.maxWorldCol){
                     String numbers[] = line.split(" ");
-
                     int num = Integer.parseInt(numbers[col]);
-
-                    mapaTileNumber[col][row] = num;
+                    targetArray[col][row] = num;
                     col++;
                 }
                 if(col == panel.maxWorldCol){
@@ -108,36 +115,36 @@ public class TileManager {
             }
             reader.close();
         }catch(Exception e){
-            e.printStackTrace();
+            // Si el archivo no existe o está vacío, deja la capa en 0 (sin objetos)
         }
     }
 
     public void draw(Graphics2D g2){
-
         int worldCol = 0;
         int worldRow = 0;
 
         while(worldCol < panel.maxWorldCol && worldRow < panel.maxWorldRow){
+            int tileNum =  mapaTileNumber[worldCol][worldRow];
+            int objetoNum = objetoTileNumber[worldCol][worldRow];
 
-            int tileNum =  mapaTileNumber[worldCol][worldRow]; //imagen que va a mostrar, agrarra del arreglo de imagenes
+            int worldX = worldCol * panel.tileSize;
+            int worldY = worldRow * panel.tileSize;
+            int screenX = worldX - panel.jugador1.worldX + panel.jugador1.screenX;
+            int screenY = worldY - panel.jugador1.worldY + panel.jugador1.screenY;
 
-            int worldX = worldCol * panel.tileSize;  //detecta posicion en el MAPA para pintar
-            int worldY = worldRow * panel.tileSize;  //detecta posicion en el MAPA para pintar
-            int screenX = worldX - panel.jugador1.worldX + panel.jugador1.screenX;  //detecta posicion en PANTALLA para mostrar
-            int screenY = worldY - panel.jugador1.worldY + panel.jugador1.screenY;  //detecta posicion en PANTALLA para mostrar
-
+            // Dibuja primero el terreno
             g2.drawImage(tile[tileNum].imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
 
-            worldCol++;
+            // Dibuja el objeto si hay (por ejemplo, si objetoNum != 0)
+            if(objetoNum != 0){
+                g2.drawImage(tile[objetoNum].imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
+            }
 
+            worldCol++;
             if(worldCol == panel.maxWorldCol){
                 worldCol = 0;
                 worldRow++;
             }
         }
-
-
-
-
     }
 }
