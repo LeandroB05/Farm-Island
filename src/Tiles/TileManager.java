@@ -1,21 +1,25 @@
 package Tiles;
 
 import Main.PanelJuego;
+import Entidades.Objeto;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class TileManager {
 
     PanelJuego panel;
     public Tile[] tile;
     public int[][] mapaTileNumber;
+    public ArrayList<Objeto> objetos;
 
     public TileManager(PanelJuego panel) {
         this.panel = panel;
         tile = new Tile[50];  //cantidad de tiles que necesitamos, de agua, tierra, etc(anadir mas si se necesitan)
         mapaTileNumber = new int[panel.maxWorldCol][panel.maxWorldRow];
+        objetos = new ArrayList<>();
 
         getTileImage();
         loadMap("../Sprites/Mapas/mundo01.txt");

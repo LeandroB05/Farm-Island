@@ -1,10 +1,12 @@
 package Main;
 
 import Entidades.Jugador;
+import Entidades.Objeto;
 import Tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PanelJuego extends JPanel implements Runnable {
 
@@ -33,6 +35,7 @@ public class PanelJuego extends JPanel implements Runnable {
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
     public  CollisionChecker hitbox = new CollisionChecker(this);
     public Jugador jugador1 = new Jugador(this,inputH);  //instanciar clase Jugador
+    public ArrayList<Objeto> objetosJuego;
 
 
     public PanelJuego() {
@@ -41,6 +44,7 @@ public class PanelJuego extends JPanel implements Runnable {
         this.setDoubleBuffered(true);  //existen otras opciones pero esta es mas simple
         this.addKeyListener(inputH); //para que pueda reconocer los inputs
         this.setFocusable(true); //para que haga focus en este panel
+        objetosJuego = new ArrayList<>();
 
     }
 

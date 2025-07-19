@@ -2,6 +2,7 @@ package Main;
 
 
 import Entidades.Entidad;
+import Entidades.Objeto;
 
 public class CollisionChecker {
 
@@ -55,6 +56,31 @@ public class CollisionChecker {
         if (tileNum1 != -1 && tileNum2 != -1) {
             if (panel.tileM.tile[tileNum1].collision || panel.tileM.tile[tileNum2].collision) {
                 entidad.collisionOn = true;
+            }
+        }
+    }
+
+    public void checkObject(Entidad entidad, Objeto[] objetos) {
+        for (int i = 0; i < objetos.length; i++) {
+            if (objetos[i] != null) {
+                // Get entity's solid area position
+                entidad.solidArea.x = entidad.worldX + entidad.solidArea.x;
+                entidad.solidArea.y = entidad.worldY + entidad.solidArea.y;
+                
+                // Get object's solid area position
+                objetos[i].solidArea.x = objetos[i].worldX + objetos[i].solidArea.x;
+                objetos[i].solidArea.y = objetos[i].worldY + objetos[i].solidArea.y;
+                
+                // Check collision
+                if (entidad.solidArea.intersects(objetos[i].solidArea)) {
+                    entidad.collisionOn = true;
+                }
+                
+                // Reset positions
+                entidad.solidArea.x = entidad.solidArea.x - entidad.worldX;
+                entidad.solidArea.y = entidad.solidArea.y - entidad.worldY;
+                objetos[i].solidArea.x = objetos[i].solidArea.x - objetos[i].worldX;
+                objetos[i].solidArea.y = objetos[i].solidArea.y - objetos[i].worldY;
             }
         }
     }
