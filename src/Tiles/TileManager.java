@@ -4,7 +4,6 @@ import Main.PanelJuego;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class TileManager {
@@ -27,7 +26,6 @@ public class TileManager {
 
     public void getTileImage(){
         try{
-
             tile[0] = new Tile();
             tile[0].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Fondo/grass2.png"));
             tile[1] = new Tile();
@@ -42,8 +40,10 @@ public class TileManager {
             tile[4].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/path.png"));
             tile[5] = new Tile();
             tile[5].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grass-end-left.png"));
+            tile[5].collision = true;
             tile[6] = new Tile();
             tile[6].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grass-end-right.png"));
+            tile[6].collision = true;
             tile[7] = new Tile();
             tile[7].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/uppath1.png"));
             tile[8] = new Tile();
@@ -54,8 +54,10 @@ public class TileManager {
             tile[10].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirt-to-grass2.png"));
             tile[11] = new Tile();
             tile[11].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/diagonal-dirt1.png"));
+            tile[11].collision = true;
             tile[12] = new Tile();
             tile[12].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/diagonal-dirt2.png"));
+            tile[12].collision = true;
             tile[13] = new Tile();
             tile[13].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassL.png"));
             tile[14] = new Tile();
@@ -80,20 +82,36 @@ public class TileManager {
             tile[23].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/sand1.png"));
             tile[24] = new Tile();
             tile[24].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirtL.png"));
+            tile[24].collision = true;
             tile[25] = new Tile();
             tile[25].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/dirtR.png"));
+            tile[25].collision = true;
             tile[26] = new Tile();
             tile[26].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassTL.png"));
+            tile[26].collision = true;
             tile[27] = new Tile();
             tile[27].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassTR.png"));
-
-
-
+            tile[27].collision = true;
+            tile[28] = new Tile();
+            tile[28].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/bush1.png"));
+            tile[28].collision = true;
+            tile[29] = new Tile();
+            tile[29].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/flower1.png"));
+            tile[30] = new Tile();
+            tile[30].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteL.png"));
+            tile[31] = new Tile();
+            tile[31].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteR.png"));
+            tile[32] = new Tile();
+            tile[32].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteT.png"));
+            tile[33] = new Tile();
+            tile[33].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteB.png"));
 
         }catch(IOException e){
             e.printStackTrace();
         }
     }
+
+
 
     public void loadMap(String filePath, int[][] targetArray){
         try{

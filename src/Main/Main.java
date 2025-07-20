@@ -9,7 +9,7 @@ public class Main {
         JFrame window = new JFrame(); //crear nueva ventanassswwds
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //para que aparezca el boton de cerrar
         window.setResizable(false); //no cambiar el tamano de la ventana
-        window.setTitle("ProyectoGranja"); //titulo de la ventanaddsd
+        window.setTitle("Farm Island"); //titulo de la ventanaddsd
 
 
         PanelJuego panel = new PanelJuego();
