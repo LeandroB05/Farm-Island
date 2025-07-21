@@ -21,9 +21,5 @@ public class Main {
         window.setVisible(true); //para poder ver la ventana
 
         panel.startGameThread();
-
-
-
-
     }
 }

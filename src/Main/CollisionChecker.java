@@ -2,7 +2,7 @@ package Main;
 
 import Entidades.Entidad;
 
-public class CollisionChecker {
+public class  CollisionChecker {
 
     PanelJuego panel;
 
