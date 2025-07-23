@@ -76,4 +76,117 @@ public class  CollisionChecker {
             entidad.collisionOn = colisionTerreno;
         }
     }
+    public int verificarObjeto(Entidad entidad, boolean jugador){//Revisa si se esta chocando con algo si es asi devuelve el indice del objeto
+        int indice=999;                                             //El indice se usa despues para una interaccion entre objeto/npc jugador
+        for(int i = 0; i< panel.objeto.length;i++){
+            if (panel.objeto[i] != null){
+                //Area solida de la entidad (jugador)
+                entidad.solidArea.x = entidad.worldX + entidad.solidArea.x;
+                entidad.solidArea.y = entidad.worldY + entidad.solidArea.y;
+                //Area solida del objeto
+                panel.objeto[i].solidArea.x = panel.objeto[i].worldX + panel.objeto[i].solidArea.x;
+                panel.objeto[i].solidArea.y = panel.objeto[i].worldY + panel.objeto[i].solidArea.y;
+                switch (entidad.direction) {
+                    case "arriba":
+                        entidad.solidArea.y = entidad.solidArea.y-entidad.speed;
+                        if (entidad.solidArea.intersects(panel.objeto[i].solidArea)){
+                            if(panel.objeto[i].colision){
+                                entidad.collisionOn = true;
+                            }
+                            if(jugador){
+                                indice = i;
+                            }
+                        }
+                        break;
+                        case "abajo":
+                            entidad.solidArea.y = entidad.solidArea.y+entidad.speed;//Metodo intersects revisa si se intersectan (colisionan)
+                            if (entidad.solidArea.intersects(panel.objeto[i].solidArea)){
+                                if(panel.objeto[i].colision){
+                                    entidad.collisionOn = true;
+                                }
+                                if(jugador){
+                                    indice = i;
+                                }
+                            }
+                            break;
+                            case "izquierda":
+                                entidad.solidArea.x = entidad.solidArea.x-entidad.speed;
+                                if (entidad.solidArea.intersects(panel.objeto[i].solidArea)){
+                                    if(panel.objeto[i].colision){
+                                        entidad.collisionOn = true;
+                                    }
+                                    if(jugador){
+                                        indice = i;
+                                    }
+                                }
+                                break;
+                                case "derecha":
+                                    entidad.solidArea.x = entidad.solidArea.x+entidad.speed;
+                                    if (entidad.solidArea.intersects(panel.objeto[i].solidArea)){
+                                        if(panel.objeto[i].colision){
+                                            entidad.collisionOn = true;
+                                        }
+                                        if(jugador){
+                                            indice = i;
+                                        }
+                                    }
+                                    break;
+                }
+                entidad.solidArea.x = entidad.solidAreaDefaultX;
+                entidad.solidArea.y = entidad.solidAreaDefaultY;
+                panel.objeto[i].solidArea.x = panel.objeto[i].solidAreaDefaultX;
+                panel.objeto[i].solidArea.y = panel.objeto[i].solidAreaDefaultY;
+            }
+        }
+        return indice;
+    }
+
+    public int verificarEntidad(Entidad entidad, Entidad[] objetivo) {
+        int indice=999;                                             //El indice se usa despues para una interaccion entre objeto/npc jugador
+        for(int i = 0; i< objetivo.length;i++){
+            if (objetivo[i] != null){
+                //Area solida de la entidad (jugador)
+                entidad.solidArea.x = entidad.worldX + entidad.solidArea.x;
+                entidad.solidArea.y = entidad.worldY + entidad.solidArea.y;
+                //Area solida del objeto
+                objetivo[i].solidArea.x = objetivo[i].worldX + objetivo[i].solidArea.x;
+                objetivo[i].solidArea.y = objetivo[i].worldY + objetivo[i].solidArea.y;
+                switch (entidad.direction) {
+                    case "arriba":
+                        entidad.solidArea.y = entidad.solidArea.y-entidad.speed;
+                        if (entidad.solidArea.intersects(objetivo[i].solidArea)){
+                            entidad.collisionOn = true;
+                                indice = i;
+                        }
+                        break;
+                    case "abajo":
+                        entidad.solidArea.y = entidad.solidArea.y+entidad.speed;//Metodo intersects revisa si se intersectan (colisionan)
+                        if (entidad.solidArea.intersects(objetivo[i].solidArea)){
+                            entidad.collisionOn = true;
+                                indice = i;
+                        }
+                        break;
+                    case "izquierda":
+                        entidad.solidArea.x = entidad.solidArea.x-entidad.speed;
+                        if (entidad.solidArea.intersects(objetivo[i].solidArea)){
+                            entidad.collisionOn = true;
+                                indice = i;
+                        }
+                        break;
+                    case "derecha":
+                        entidad.solidArea.x = entidad.solidArea.x+entidad.speed;
+                        if (entidad.solidArea.intersects(objetivo[i].solidArea)){
+                            entidad.collisionOn = true;
+                                indice = i;
+                        }
+                        break;
+                }
+                entidad.solidArea.x = entidad.solidAreaDefaultX;
+                entidad.solidArea.y = entidad.solidAreaDefaultY;
+                objetivo[i].solidArea.x = objetivo[i].solidAreaDefaultX;
+                objetivo[i].solidArea.y = objetivo[i].solidAreaDefaultY;
+            }
+        }
+        return indice;
+    }
 }

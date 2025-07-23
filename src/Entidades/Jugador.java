@@ -27,6 +27,8 @@ public class Jugador extends Entidad {
         solidArea = new Rectangle();
         solidArea.x = 9;
         solidArea.y = 20;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 27;
         solidArea.height = 24;
 
@@ -38,7 +40,7 @@ public class Jugador extends Entidad {
 
     public void setDefaultValues(){
         worldX = panel.tileSize * 20;
-        worldY = panel.tileSize * 20;
+        worldY = panel.tileSize * 25;
         speed = 7;
         direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
@@ -69,6 +71,7 @@ public class Jugador extends Entidad {
             e.printStackTrace();
         }
     }
+
 
     public void update() {
         double dx = 0;
@@ -124,6 +127,21 @@ public class Jugador extends Entidad {
             }
         }
 
+        //Verifica si esta tocando algo
+        int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
+        //aqui llamas algun metodo para los objetos
+        int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
+        interaccionNPC(indiceNPC);
+        if (indiceNPC!=999){
+            if (collisionOn) {  //moverse solo si no hay colision
+                worldX -= dx;
+            }
+            if (!collisionOn) { //moverse solo si no hay colision
+                worldY -= dy;
+            }
+        }
+
+
         // Animación
         spriteCounter++;
         int velocidadAnimacion = idle ? 20 : 10;
@@ -133,11 +151,9 @@ public class Jugador extends Entidad {
             spriteCounter = 0;
         }
     }
-
-
-
-
-
+    public void interaccionNPC(int indiceNPC) {
+        //System.out.println("Prueba"+ indiceNPC) //(prueba si imprime 999 es que no esta tocando nada); //despues se agrega un switch con las interacciones de npc
+    }
     public void draw(Graphics2D g2) {
         BufferedImage imagen = null;
 

@@ -29,7 +29,6 @@ public class PanelJuego extends JPanel implements Runnable {
 
 
     int FPS = 60;
-
     //SISTEMA
     TileManager tileM = new TileManager(this);
     InputHandler inputH = new InputHandler(); //clase para manejar las acciones del usuario
@@ -101,8 +100,13 @@ public class PanelJuego extends JPanel implements Runnable {
     }
 
     public void update() {  //En Java el(0,0) esta arriba a la derecha, la X aumenta hacia la derecha y la Y aumenta hacia abajo
-
         jugador1.update();
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                npc[i].update();
+            }
+
+        }
     }
 
     public void paintComponent(Graphics g) {  //cada vez que nos movamos, esta funcion "pinta" al personaje otra vez

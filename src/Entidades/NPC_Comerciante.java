@@ -8,11 +8,11 @@ import java.io.IOException;
 public class NPC_Comerciante extends Entidad {//IMPORTANTE: EL NPC NO TIENE COLISION PORQUE LO VOY A ENCERRAR EN UNA TIENDA
 
     public NPC_Comerciante(PanelJuego panel) {
-
-
         super(panel);
         worldX = panel.tileSize * 22;
         worldY = panel.tileSize * 17;
+        speed=0;
+
         getComercianteImage();
         update();
 
