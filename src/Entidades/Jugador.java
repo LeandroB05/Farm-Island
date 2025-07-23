@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class Jugador extends Entidad {
 
-    PanelJuego panel;
     InputHandler inputH;
 
 
@@ -19,7 +18,7 @@ public class Jugador extends Entidad {
     public final int screenY;
 
     public Jugador(PanelJuego panel, InputHandler inputH) {
-        this.panel = panel;
+        super(panel);
         this.inputH = inputH;
 
         screenX = panel.screenWidth/2 - (panel.tileSize/2);

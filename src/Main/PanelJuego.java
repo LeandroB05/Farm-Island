@@ -1,6 +1,8 @@
 package Main;
 
+import Entidades.Entidad;
 import Entidades.Jugador;
+import Objetos.SuperObjetos;
 import Tiles.TileManager;
 
 import javax.swing.*;
@@ -8,7 +10,7 @@ import java.awt.*;
 
 public class PanelJuego extends JPanel implements Runnable {
 
-    //ajustes de pantala
+    //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
     final int scale = 3; //escalado de tamano
 
@@ -33,10 +35,16 @@ public class PanelJuego extends JPanel implements Runnable {
     InputHandler inputH = new InputHandler(); //clase para manejar las acciones del usuario
     Sound sonido = new Sound(); //instanciar la clase sonido
     public CollisionChecker hitbox = new CollisionChecker(this);
+    public AssetSetter assetSetter = new AssetSetter(this); //instanciar para crear objetos
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
+
+    //OBJETOS
+    public SuperObjetos objeto[] = new SuperObjetos[10];//10 es la cantidad de objetos que se pueden monstrar a la vez
+                                                            // (se puede aumentar pero baja el rendimiento)
 
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
+    public Entidad npc[] = new Entidad[10];
 
 
     public PanelJuego() {
@@ -49,8 +57,12 @@ public class PanelJuego extends JPanel implements Runnable {
         setupGame();
     }
 
-    public void setupGame() { //inicializar el juego
+    public void setupGame() {
+        //inicializar el juego
         playMusic(0); //llamada a la funcion que reproduce la musica de fondo
+        assetSetter.setObjeto();
+        assetSetter.setNPC();
+
     }
 
     public void startGameThread() {
@@ -98,7 +110,21 @@ public class PanelJuego extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g; //estamos cambiando una clase por otra, las 2da permite mejor control de geometria, posicion etc
 
         setBackground(new Color(36, 172, 228));
+        //Dibujar el mapa
         tileM.draw(g2);
+        //Dibujar objetos
+        for (int i = 0; i < objeto.length; i++) {//Verifica el arreglo de los objetos que se creo arriba
+            if (objeto[i] != null) {//Evita un null pointer error
+                objeto[i].dibujar(g2, this);
+            }
+        }
+        //Dibujar NPC
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+             npc[i].dibujar(g2, this);
+            }
+        }
+        //Dibujar el jugador
         jugador1.draw(g2);
         g2.dispose();
     }
