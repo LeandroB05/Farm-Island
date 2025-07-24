@@ -48,7 +48,6 @@ public class Entidad {
             else if (spriteNum == 4) imagen = idleL4;
 
         }
-
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
 

@@ -129,18 +129,19 @@ public class Jugador extends Entidad {
 
         //Verifica si esta tocando algo
         int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
-        //aqui llamas algun metodo para los objetos
+
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
-        interaccionNPC(indiceNPC);
+        panel.interacciones.interaccionNPC(indiceNPC);
+        if (indiceNPC != 999) {
+            panel.mostrarDialogo=true;
+        }
         if (indiceNPC!=999){
-            if (collisionOn) {  //moverse solo si no hay colision
+            if (collisionOn) {  //No puede moverse si entra en contacto con un npc
                 worldX -= dx;
-            }
-            if (!collisionOn) { //moverse solo si no hay colision
                 worldY -= dy;
             }
+            panel.interacciones.interaccionNPC(indiceNPC);
         }
-
 
         // Animación
         spriteCounter++;
@@ -150,9 +151,6 @@ public class Jugador extends Entidad {
             if (spriteNum > 4) spriteNum = 1;
             spriteCounter = 0;
         }
-    }
-    public void interaccionNPC(int indiceNPC) {
-        //System.out.println("Prueba"+ indiceNPC) //(prueba si imprime 999 es que no esta tocando nada); //despues se agrega un switch con las interacciones de npc
     }
     public void draw(Graphics2D g2) {
         BufferedImage imagen = null;
@@ -185,6 +183,7 @@ public class Jugador extends Entidad {
 
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
+
 
 
 }

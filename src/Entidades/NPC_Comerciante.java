@@ -29,16 +29,19 @@ public class NPC_Comerciante extends Entidad {//IMPORTANTE: EL NPC NO TIENE COLI
         }
     }
     public void update() {
-        double dx = 0;
-        double dy = 0;
         idle = true;//El npc va estar quieto
         // Animación
-        spriteCounter++;
-        int velocidadAnimacion = idle ? 20 : 10;
-        if (spriteCounter > velocidadAnimacion) {
-            spriteNum++;
-            if (spriteNum > 4) spriteNum = 1;
+        if (panel.pausado){
             spriteCounter = 0;
+        }else{
+            spriteCounter++;
+            int velocidadAnimacion = idle ? 20 : 10;
+            if (spriteCounter > velocidadAnimacion) {
+                spriteNum++;
+                if (spriteNum > 4) spriteNum = 1;
+                spriteCounter = 0;
+            }
         }
+
     }
 }

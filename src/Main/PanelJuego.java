@@ -9,7 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelJuego extends JPanel implements Runnable {
-
+    //Estadel juego
+    public boolean pausado=false;
+    public boolean mostrarDialogo = false;
+    public boolean accion = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
     final int scale = 3; //escalado de tamano
@@ -31,19 +34,20 @@ public class PanelJuego extends JPanel implements Runnable {
     int FPS = 60;
     //SISTEMA
     TileManager tileM = new TileManager(this);
-    InputHandler inputH = new InputHandler(); //clase para manejar las acciones del usuario
+    InputHandler inputH = new InputHandler(this); //clase para manejar las acciones del usuario
     Sound sonido = new Sound(); //instanciar la clase sonido
     public CollisionChecker hitbox = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this); //instanciar para crear objetos
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
 
     //OBJETOS
-    public SuperObjetos objeto[] = new SuperObjetos[10];//10 es la cantidad de objetos que se pueden monstrar a la vez
-                                                            // (se puede aumentar pero baja el rendimiento)
-
+    public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
     public Entidad npc[] = new Entidad[10];
+    //DIALOGOS
+    public Ventanas ventanas = new Ventanas(this);
+    public Interacciones interacciones  = new Interacciones(this);
 
 
     public PanelJuego() {
@@ -61,6 +65,7 @@ public class PanelJuego extends JPanel implements Runnable {
         playMusic(0); //llamada a la funcion que reproduce la musica de fondo
         assetSetter.setObjeto();
         assetSetter.setNPC();
+        pausado=false;
 
     }
 
@@ -100,12 +105,18 @@ public class PanelJuego extends JPanel implements Runnable {
     }
 
     public void update() {  //En Java el(0,0) esta arriba a la derecha, la X aumenta hacia la derecha y la Y aumenta hacia abajo
-        jugador1.update();
+        //Actualiza jugador
+        if (pausado) {
+            //Hace nada ta pausado :P
+        }else{
+            sonido.play();
+            jugador1.update();
+        }
+        //Actualiza npcs
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {
                 npc[i].update();
             }
-
         }
     }
 
@@ -130,6 +141,16 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         //Dibujar el jugador
         jugador1.draw(g2);
+        //Dibujar cuadro de dialogo
+        if (mostrarDialogo) {
+            ventanas.dibujarPantallaDialogo(g2);
+            if (interacciones.interaccionActiva){
+                mostrarDialogo = true;
+            }
+        }
+        if (pausado) {
+            ventanas.dibujarPausaVentana(g2);
+        }
         g2.dispose();
     }
 
