@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Jugador extends Entidad {
 
     InputHandler inputH;
-
+    public int dinero = 1000;
 
     public final int screenX;
     public final int screenY;
@@ -128,13 +128,14 @@ public class Jugador extends Entidad {
         }
 
         //Verifica si esta tocando algo
+        //Objeto
         int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
-
+        //NPC
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
-        panel.interacciones.interaccionNPC(indiceNPC);
-        if (indiceNPC != 999) {
-            panel.mostrarDialogo=true;
+        if(indiceNPC!=999){
+            panel.tiendaComprar.activar();
         }
+
         if (indiceNPC!=999){
             if (collisionOn) {  //No puede moverse si entra en contacto con un npc
                 worldX -= dx;

@@ -27,11 +27,15 @@ public class Ventanas {
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
     }
-    public void dibujarVentanaTienda(Graphics2D g2, int x, int y, int w, int h){
-        Color c = new Color(0, 0, 0);
+    public void dibujarVentanaTienda(Graphics2D g2){
+        int x = panel.tileSize * 2;
+        int y = panel.tileSize * 2;
+        int w = panel.screenWidth - (panel.tileSize * 4);
+        int h = panel.tileSize * 15;
+        Color c = new Color(0, 0, 0, 200);
         g2.setColor(c);
         g2.fillRoundRect(x, y, w, h, 40, 40);
-        c= new Color(255, 255, 255);
+        c= new Color(255, 255, 255,200);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
@@ -42,10 +46,10 @@ public class Ventanas {
         int w = panel.screenWidth - (panel.tileSize * 8);
         int h = panel.tileSize * 10;
         //Parametros para la ventana
-        Color c = new Color(0, 0, 0, 200);
+        Color c = new Color(0, 100, 0, 200);
         g2.setColor(c);
         g2.fillRoundRect(x, y, w, h, 40, 40);
-        c= new Color(255, 255, 255, 200);
+        c= new Color(255, 255, 255);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);

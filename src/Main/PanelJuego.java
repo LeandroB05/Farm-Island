@@ -2,7 +2,9 @@ package Main;
 
 import Entidades.Entidad;
 import Entidades.Jugador;
+import Objetos.Semillas;
 import Objetos.SuperObjetos;
+import Tiendas.TiendaComprar;
 import Tiles.TileManager;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ public class PanelJuego extends JPanel implements Runnable {
     //Estadel juego
     public boolean pausado=false;
     public boolean mostrarDialogo = false;
+    public boolean mostrarTienda = false;
     public boolean accion = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
@@ -39,8 +42,10 @@ public class PanelJuego extends JPanel implements Runnable {
     public CollisionChecker hitbox = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this); //instanciar para crear objetos
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
-
+    //TIENDAS
+    public TiendaComprar tiendaComprar = new TiendaComprar(this);
     //OBJETOS
+    public Semillas semillas[]= new Semillas[50];
     public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
@@ -141,16 +146,23 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         //Dibujar el jugador
         jugador1.draw(g2);
-        //Dibujar cuadro de dialogo
+        //Dibujar ventanas
         if (mostrarDialogo) {
             ventanas.dibujarPantallaDialogo(g2);
             if (interacciones.interaccionActiva){
                 mostrarDialogo = true;
             }
         }
+        if (mostrarTienda) {
+            ventanas.dibujarVentanaTienda(g2);
+        }
         if (pausado) {
             ventanas.dibujarPausaVentana(g2);
         }
+        if (tiendaComprar.estaActiva()) {
+            tiendaComprar.dibujar(g2);
+        }
+
         g2.dispose();
     }
 
