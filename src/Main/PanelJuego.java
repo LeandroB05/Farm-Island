@@ -64,7 +64,7 @@ public class PanelJuego extends JPanel implements Runnable {
         this.addKeyListener(inputH); //para que pueda reconocer los inputs
         this.setFocusable(true); //para que haga focus en este panel
 
-        setupGame();
+        //setupGame();
     }
 
     public void setupGame() {
@@ -77,6 +77,7 @@ public class PanelJuego extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
+        setupGame(); //llamada a la funcion que inicializa el juego
         gameThread = new Thread(this); //estamos pasandole la clase PanelJuego a este objeto, instanciando el hilo(thread)
         gameThread.start();
 
