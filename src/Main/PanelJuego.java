@@ -53,6 +53,8 @@ public class PanelJuego extends JPanel implements Runnable {
     //DIALOGOS
     public Ventanas ventanas = new Ventanas(this);
     public Interacciones interacciones  = new Interacciones(this);
+    //TIEMPO
+    public Tiempo tiempo = new Tiempo();
 
 
     public PanelJuego() {
@@ -86,6 +88,7 @@ public class PanelJuego extends JPanel implements Runnable {
         double intervaloDibujo = 1000000000 / FPS; //cantidad de nanosegundos en un segundos entre los fps(60)
         double delta = 0;
         long lastTime = System.nanoTime(); //tiempo actual en segundos
+        long lastTimeTimer = lastTime; //para el tiempo dentro del juego
         long tiempoActual;
 
         while (gameThread != null) { //mientras el hilo este activo siempre va a repetir este proceso
@@ -95,6 +98,12 @@ public class PanelJuego extends JPanel implements Runnable {
             lastTime = tiempoActual; //ultimo tiempo se convierte en el actual para crear el ciclo
 
             if (delta >= 1) {
+                //Calcular tiempo real transcurrido antes de actualizar lastTime
+                //Esto asegura que el temporizador avance correctamente
+                long tiempoTranscurrido = tiempoActual - lastTimeTimer;
+
+                //Actualizar tiempo del juego con el tiempo transcurrido real
+                tiempo.actualizar(tiempoTranscurrido);
                 //Actu1: Actualizar info como la posicion del personaje
                 update(); //llamada a update
 
@@ -102,8 +111,8 @@ public class PanelJuego extends JPanel implements Runnable {
                 repaint(); //llamada a paint
 
                 delta--;  //resetea el delta
+                lastTimeTimer = tiempoActual;
             }
-
 
         }
 
@@ -162,7 +171,15 @@ public class PanelJuego extends JPanel implements Runnable {
         if (tiendaComprar.estaActiva()) {
             tiendaComprar.dibujar(g2);
         }
+        //Dibujar tiempo y dia en pantalla
+        g2.setFont(new Font("Arial", Font.BOLD, 20));
+        g2.setColor(Color.WHITE);
 
+        String tiempoTexto = String.format("Tiempo: %02d:%02d:%02d", tiempo.getHoras(), tiempo.getMinutos(), tiempo.getSegundos());
+        g2.drawString(tiempoTexto, 20, 30);
+
+        String diaTexto = "Día: " + tiempo.getDiaActual();
+        g2.drawString(diaTexto, 20, 55);
         g2.dispose();
     }
 
