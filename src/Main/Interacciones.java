@@ -1,8 +1,5 @@
 package Main;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
 public class Interacciones {
     //Panel
     PanelJuego panel;
@@ -26,17 +23,19 @@ public class Interacciones {
 
     public void interaccionNPC(int indice) {
         if (indice != 999 && !panel.mostrarDialogo) {//Solo se muestra si se cumplen los dos
-            System.out.println("Interaccion npc");
             switch (indice) {//El case se llena dependiendo el npc
-                case 0://NPC Comerciante (Vender)
+                case 0://NPC Comerciante (Vende semillas)
                     panel.tiendaComprar.activar();
                     panel.mostrarDialogo = true;
-                    panel.mostrarTienda = true;
+                    panel.mostrarTiendaComprar = true;
                     panel.repaint();
                     break;
-                    case 1:
-                        System.out.println("Interaccion npc2");
-                        break;//NPC Comerciante 2 (Comprador)
+                    case 1://NPC Comerciante (Compra plantas)
+                        panel.tiendaVender.activar();
+                        panel.mostrarDialogo = true;
+                        panel.mostrarTiendaVender = true;
+                        panel.repaint();
+                        break;
             }
         }
     }

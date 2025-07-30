@@ -5,6 +5,7 @@ import Entidades.Jugador;
 import Objetos.Semillas;
 import Objetos.SuperObjetos;
 import Tiendas.TiendaComprar;
+import Tiendas.TiendaVender;
 import Tiles.TileManager;
 
 import javax.swing.*;
@@ -14,7 +15,9 @@ public class PanelJuego extends JPanel implements Runnable {
     //Estadel juego
     public boolean pausado=false;
     public boolean mostrarDialogo = false;
-    public boolean mostrarTienda = false;
+    public boolean mostrarTiendaComprar = false;
+    public boolean mostrarTiendaVender = false;
+    public boolean inventarioAbierto = false;
     public boolean mostrarDormir = false;
     public boolean accion = false;
     //ajustes de pantalla
@@ -45,12 +48,15 @@ public class PanelJuego extends JPanel implements Runnable {
     Thread gameThread; //crea un "reloj" para el juego, no para de contar hasta que tu lo cierras
     //TIENDAS
     public TiendaComprar tiendaComprar = new TiendaComprar(this);
+    public TiendaVender tiendaVender = new TiendaVender(this);
     //OBJETOS
     public Semillas semillas[]= new Semillas[50];
     public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
     public Entidad npc[] = new Entidad[10];
+    //INVENTARIO
+    public Inventario inventario= new Inventario(this);
     //DIALOGOS
     public Ventanas ventanas = new Ventanas(this);
     public Interacciones interacciones  = new Interacciones(this);
@@ -164,16 +170,24 @@ public class PanelJuego extends JPanel implements Runnable {
                 mostrarDialogo = true;
             }
         }
-        if (mostrarTienda) {
+        if (mostrarTiendaComprar) {
             ventanas.dibujarVentanaTienda(g2);
             tiendaComprar.dibujar(g2);
             tiendaComprar.dibujarInformacion(g2);
+        }
+        if (mostrarTiendaVender){
+            ventanas.dibujarVentanaTienda(g2);
+            tiendaVender.dibujar(g2);
         }
         if (pausado) {
             ventanas.dibujarPausaVentana(g2);
         }
         if (mostrarDormir) {
             ventanas.dibujarVentanaDormir(g2);
+        }
+        //Dibujar inventario
+        if (inventario.activo) {
+            inventario.dibujar(g2);
         }
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));

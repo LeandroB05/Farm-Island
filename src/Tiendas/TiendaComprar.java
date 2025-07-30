@@ -1,6 +1,5 @@
 package Tiendas;
 
-import Entidades.Jugador;
 import Main.PanelJuego;
 import Objetos.Semillas;
 
@@ -57,6 +56,9 @@ public class TiendaComprar {
         if (fondosInsuficientes) {
             g2.drawString("Fondos insuficientes", panel.tileSize * 2 + 800, panel.tileSize * 7-150);
         }
+        //Mensaje
+        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        g2.drawString("¡Bienvenido a mi tienda!", x + 30, y -100);
 
     }
     //Seleccion de la tienda
@@ -130,6 +132,7 @@ public class TiendaComprar {
         Semillas s = semillas.get(seleccion);
         if (panel.jugador1.dinero - s.getPrecio()>=0) {
             panel.jugador1.dinero -= s.getPrecio();
+            panel.jugador1.agregarItem("Semilla de "+s.getNombre());
             fondosInsuficientes=false;
         }else if ((panel.jugador1.dinero - s.getPrecio())<0) {
             fondosInsuficientes=true;
@@ -144,9 +147,6 @@ public class TiendaComprar {
     }
     public void desactivar() {
         activa = false;
-    }
-    public boolean estaActiva() {
-        return activa;
     }
 }
 
