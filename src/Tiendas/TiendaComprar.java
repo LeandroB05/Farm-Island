@@ -132,7 +132,7 @@ public class TiendaComprar {
         Semillas s = semillas.get(seleccion);
         if (panel.jugador1.dinero - s.getPrecio()>=0) {
             panel.jugador1.dinero -= s.getPrecio();
-            panel.jugador1.agregarItem(s.getNombre());
+            panel.jugador1.agregarItem("Semilla de "+s.getNombre());
             fondosInsuficientes=false;
         }else if ((panel.jugador1.dinero - s.getPrecio())<0) {
             fondosInsuficientes=true;
