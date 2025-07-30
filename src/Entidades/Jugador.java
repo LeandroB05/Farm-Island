@@ -6,14 +6,17 @@ import Main.PanelJuego;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import java.io.IOException;
 
 public class Jugador extends Entidad {
 
     InputHandler inputH;
+    //Dinero del jugador
     public int dinero = 1000;
-
+    //Inventario del jugador
+    public ArrayList<String> inventario = new ArrayList<>();
     public final int screenX;
     public final int screenY;
 
@@ -126,13 +129,12 @@ public class Jugador extends Entidad {
                 worldY += dy;
             }
         }
-
+        //Si abre el inventario se queda quieto
         //Verifica si esta tocando algo
         //Objeto
         int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
         //NPC
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
-
         if (indiceNPC!=999){
             if (collisionOn) {  //No puede moverse si entra en contacto con un npc
                 worldX -= dx;
@@ -181,7 +183,7 @@ public class Jugador extends Entidad {
 
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
-
-
-
+    public void agregarItem(String nombre) {
+        inventario.add(nombre);
+    }
 }

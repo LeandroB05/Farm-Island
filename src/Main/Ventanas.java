@@ -1,7 +1,5 @@
 package Main;
 
-import Objetos.Semillas;
-
 import java.awt.*;
 //Parametros de ventas para diferentes usos
 public class Ventanas {
@@ -30,7 +28,7 @@ public class Ventanas {
         g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
     }
     public void dibujarVentanaTienda(Graphics2D g2){
-        if (!panel.tiendaComprar.activa) return;
+        if (!panel.tiendaComprar.activa&&!panel.tiendaVender.activa) return;
         int x = panel.tileSize * 2;
         int y = panel.tileSize * 7;
         int w = panel.screenWidth - (panel.tileSize * 20);
