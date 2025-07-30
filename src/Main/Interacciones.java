@@ -25,16 +25,20 @@ public class Interacciones {
         if (indice != 999 && !panel.mostrarDialogo) {//Solo se muestra si se cumplen los dos
             switch (indice) {//El case se llena dependiendo el npc
                 case 0://NPC Comerciante (Vende semillas)
+                    panel.tiendaVender.desactivar();
+                    panel.mostrarTiendaVender = false;
                     panel.tiendaComprar.activar();
                     panel.mostrarDialogo = true;
                     panel.mostrarTiendaComprar = true;
-                    panel.repaint();
+
                     break;
                     case 1://NPC Comerciante (Compra plantas)
+                        panel.tiendaComprar.desactivar();
+                        panel.mostrarTiendaComprar = false;
                         panel.tiendaVender.activar();
                         panel.mostrarDialogo = true;
                         panel.mostrarTiendaVender = true;
-                        panel.repaint();
+
                         break;
             }
         }

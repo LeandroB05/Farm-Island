@@ -137,7 +137,6 @@ public class TiendaComprar {
         }else if ((panel.jugador1.dinero - s.getPrecio())<0) {
             fondosInsuficientes=true;
         }
-        //AGREGAR FUNCIONES DE INVENTARIO AQUI (la clase todavia no esta hecha)
     }
 
     //Estados de la tienda
