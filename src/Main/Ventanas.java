@@ -1,5 +1,7 @@
 package Main;
 
+import Objetos.Semillas;
+
 import java.awt.*;
 //Parametros de ventas para diferentes usos
 public class Ventanas {
@@ -28,17 +30,25 @@ public class Ventanas {
         g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
     }
     public void dibujarVentanaTienda(Graphics2D g2){
+        if (!panel.tiendaComprar.activa) return;
         int x = panel.tileSize * 2;
-        int y = panel.tileSize * 2;
-        int w = panel.screenWidth - (panel.tileSize * 4);
-        int h = panel.tileSize * 15;
-        Color c = new Color(0, 0, 0, 200);
+        int y = panel.tileSize * 7;
+        int w = panel.screenWidth - (panel.tileSize * 20);
+        int h = panel.tileSize * 10;
+        Color c = new Color(0, 0, 0);
         g2.setColor(c);
-        g2.fillRoundRect(x, y, w, h, 40, 40);
-        c= new Color(255, 255, 255,200);
+        //Ventana izquierda (Seleccion)
+        g2.fillRoundRect(x, y, w-10, h, 40, 40);
+        //Ventana derecha (informacion)
+        g2.fillRoundRect(x+600, y, w-10, h, 40, 40);
+        c= new Color(255, 255, 255);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
+        //Ventana izquierda (Seleccion)
+        g2.drawRoundRect(x, y+5, w-10, h-10, 40, 40);
+        //Ventana derecha (informacion)
+        g2.drawRoundRect(x+600, y+5, w-10, h-10, 40, 40);
+
     }
     public void dibujarPausaVentana(Graphics2D g2){
         int x = panel.tileSize * 4;

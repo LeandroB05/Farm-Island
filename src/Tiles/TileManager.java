@@ -68,7 +68,6 @@ public class TileManager {
             tile[16].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassB.png"));
             tile[17] = new Tile();
             tile[17].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassB2.png"));
-            tile[17].collision = true;
             tile[18] = new Tile();
             tile[18].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/pathTL.png"));
             tile[19] = new Tile();
@@ -131,6 +130,9 @@ public class TileManager {
             tile[41] = new Tile();
             tile[41].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Cofre.png"));//Nose como clasificarlo
             tile[41].collision = true;
+            tile[42] = new Tile();
+            tile[42].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Fondo/grass2.png"));
+            tile[42].collision = true;
 
         }catch(IOException e){
             e.printStackTrace();

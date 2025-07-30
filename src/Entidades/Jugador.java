@@ -132,9 +132,6 @@ public class Jugador extends Entidad {
         int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
         //NPC
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
-        if(indiceNPC!=999){
-            panel.tiendaComprar.activar();
-        }
 
         if (indiceNPC!=999){
             if (collisionOn) {  //No puede moverse si entra en contacto con un npc
