@@ -181,6 +181,9 @@ public class PanelJuego extends JPanel implements Runnable {
         if (pausado) {
             ventanas.dibujarPausaVentana(g2);
         }
+        if (mostrarDormir) {
+            ventanas.dibujarVentanaDormir(g2);
+        }
         //Dibujar inventario
         if (inventario.activo) {
             inventario.dibujar(g2);
