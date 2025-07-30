@@ -68,6 +68,7 @@ public class TileManager {
             tile[16].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassB.png"));
             tile[17] = new Tile();
             tile[17].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/grassB2.png"));
+            tile[17].collision = true;
             tile[18] = new Tile();
             tile[18].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/pathTL.png"));
             tile[19] = new Tile();
@@ -105,6 +106,31 @@ public class TileManager {
             tile[32].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteT.png"));
             tile[33] = new Tile();
             tile[33].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/puenteB.png"));
+            //34-36 y los carteles son parte de la tienda
+            tile[34] = new Tile();
+            tile[34].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Tienda_superiorL.png"));
+            tile[34].collision = true;
+            tile[35] = new Tile();
+            tile[35].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Tienda_inferiorL.png"));
+            tile[35].collision = true;
+            tile[36] = new Tile();
+            tile[36].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Tienda_inferiorR.png"));
+            tile[36].collision = true;
+            tile[37] = new Tile();
+            tile[37].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Cartel_semillas.png"));
+            tile[37].collision = true;
+            tile[38] = new Tile();
+            tile[38].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Cartel_cosechas.png"));
+            tile[38].collision = true;
+            tile[39] = new Tile();
+            tile[39].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Caja.png"));
+            tile[39].collision = true;
+            tile[40] = new Tile();
+            tile[40].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Caja2.png"));
+            tile[40].collision = true;
+            tile[41] = new Tile();
+            tile[41].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Cofre.png"));//Nose como clasificarlo
+            tile[41].collision = true;
 
         }catch(IOException e){
             e.printStackTrace();

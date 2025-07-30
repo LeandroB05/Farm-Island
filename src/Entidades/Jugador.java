@@ -11,15 +11,14 @@ import java.io.IOException;
 
 public class Jugador extends Entidad {
 
-    PanelJuego panel;
     InputHandler inputH;
-
+    public int dinero = 1000;
 
     public final int screenX;
     public final int screenY;
 
     public Jugador(PanelJuego panel, InputHandler inputH) {
-        this.panel = panel;
+        super(panel);
         this.inputH = inputH;
 
         screenX = panel.screenWidth/2 - (panel.tileSize/2);
@@ -28,6 +27,8 @@ public class Jugador extends Entidad {
         solidArea = new Rectangle();
         solidArea.x = 9;
         solidArea.y = 20;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 27;
         solidArea.height = 24;
 
@@ -39,7 +40,7 @@ public class Jugador extends Entidad {
 
     public void setDefaultValues(){
         worldX = panel.tileSize * 20;
-        worldY = panel.tileSize * 20;
+        worldY = panel.tileSize * 25;
         speed = 7;
         direction = "derecha";
         idle = !(inputH.upPressed || inputH.downPressed || inputH.leftPressed || inputH.rightPressed);
@@ -70,6 +71,7 @@ public class Jugador extends Entidad {
             e.printStackTrace();
         }
     }
+
 
     public void update() {
         double dx = 0;
@@ -125,6 +127,23 @@ public class Jugador extends Entidad {
             }
         }
 
+        //Verifica si esta tocando algo
+        //Objeto
+        int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
+        //NPC
+        int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
+        if(indiceNPC!=999){
+            panel.tiendaComprar.activar();
+        }
+
+        if (indiceNPC!=999){
+            if (collisionOn) {  //No puede moverse si entra en contacto con un npc
+                worldX -= dx;
+                worldY -= dy;
+            }
+            panel.interacciones.interaccionNPC(indiceNPC);
+        }
+
         // Animación
         spriteCounter++;
         int velocidadAnimacion = idle ? 20 : 10;
@@ -134,11 +153,6 @@ public class Jugador extends Entidad {
             spriteCounter = 0;
         }
     }
-
-
-
-
-
     public void draw(Graphics2D g2) {
         BufferedImage imagen = null;
 
@@ -170,6 +184,7 @@ public class Jugador extends Entidad {
 
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
+
 
 
 }
