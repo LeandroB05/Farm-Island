@@ -26,7 +26,7 @@ public class Main {
             panel.startGameThread(); // Iniciar el hilo del juego
         });
 
-        pantallaInicioRef[0] = pantallaInicio; // Asignar la referencia de pantallaInicio
+        pantallaInicioRef[0] = pantallaInicio; // Asignar la referencia de pantallaIniciosa
 
 
         panelContenedor.add(pantallaInicio, "MENU");

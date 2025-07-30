@@ -1,10 +1,7 @@
 package Tiendas;
 
 import Main.PanelJuego;
-import Objetos.SuperObjetos;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class TiendaVender {
     PanelJuego panel;
@@ -22,46 +19,40 @@ public class TiendaVender {
         int x = panel.tileSize * 2;
         int y = panel.tileSize * 7;
 
-        // Título de la tienda
-        g2.setColor(new Color(0, 0, 0, 200));
+        // Título
         g2.setColor(Color.white);
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 40));
         g2.drawString("Vender Objetos", x + 20, y - 150);
 
         if (panel.jugador1.inventario.isEmpty()) {
             g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
-            g2.drawString("No tienes objetos para vender.", x + 50, y-30);
+            g2.drawString("No tienes objetos para vender.", x + 50, y - 30);
             sinObjetosParaVender = true;
             return;
         }
 
         sinObjetosParaVender = false;
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 20));
+
         for (int i = 0; i < panel.jugador1.inventario.size(); i++) {
-            String itemNombre = panel.jugador1.inventario.get(i);
+            var item = panel.jugador1.inventario.get(i);
             int textoY = y + 60 + i * panel.tileSize;
 
             // Contorno de selección
             if (i == seleccion) {
                 g2.setColor(Color.yellow);
-                g2.drawRect(x + 10, textoY - 20, panel.screenWidth - (panel.tileSize * 20) - 40, panel.tileSize);
+                g2.drawRect(x + 10, textoY - 20, 400, panel.tileSize);
             }
 
             g2.setColor(Color.white);
-
-            // Buscar precio basado en nombre del objeto
-            int precio = obtenerPrecioVenta(itemNombre);
-
-            g2.drawString(itemNombre + " - $" + precio, x + 20, textoY);
+            int precio = obtenerPrecioVenta(item.nombre);
+            g2.drawString(item.nombre + " x" + item.cantidad + " - $" + precio + " c/u", x + 20, textoY);
         }
 
-        // Dinero actual del jugador
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
-        g2.setColor(Color.white);
         g2.drawString("Dinero actual: " + panel.jugador1.dinero, x + 800, y - 180);
     }
 
-    // Mover selección arriba/abajo
     public void moverSeleccion(int direccion) {
         if (panel.jugador1.inventario.isEmpty()) return;
 
@@ -70,25 +61,27 @@ public class TiendaVender {
         if (seleccion >= panel.jugador1.inventario.size()) seleccion = 0;
     }
 
-    // Metodo para vender el objeto seleccionado
     public void venderSeleccionada() {
         if (panel.jugador1.inventario.isEmpty()) return;
 
-        String itemNombre = panel.jugador1.inventario.get(seleccion);
-        int precioVenta = obtenerPrecioVenta(itemNombre);
+        var item = panel.jugador1.inventario.get(seleccion);
+        int precioVenta = obtenerPrecioVenta(item.nombre);
 
-        // Sumar dinero y quitar del inventario
+        // Vender solo 1 unidad
         panel.jugador1.dinero += precioVenta;
-        panel.jugador1.inventario.remove(seleccion);
+        item.cantidad--;
 
-        // Ajustar selección para no salirse del rango
+        if (item.cantidad <= 0) {
+            panel.jugador1.inventario.remove(seleccion);
+        }
+
         if (seleccion >= panel.jugador1.inventario.size()) {
             seleccion = panel.jugador1.inventario.size() - 1;
         }
     }
 
-    // Busca el precio de venta según el nombre del objeto
     private int obtenerPrecioVenta(String nombreObjeto) {
+        if (nombreObjeto == null) return 0; // o algún valor por defecto
 
         switch (nombreObjeto.toLowerCase()) {
             case "semilla de zanahoria": return 5;
@@ -96,11 +89,10 @@ public class TiendaVender {
             case "semilla de papa": return 10;
             case "semilla de calabaza": return 13;
             case "semilla de coliflor": return 15;
-            default:
-                // Por defecto 5
-                return 5;
+            default: return 5;
         }
     }
+
 
     public void activar() {
         activa = true;
@@ -111,4 +103,3 @@ public class TiendaVender {
         activa = false;
     }
 }
-

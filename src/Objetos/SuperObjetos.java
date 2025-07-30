@@ -15,6 +15,10 @@ public class SuperObjetos{
     public int solidAreaDefaultX=0;
     public int solidAreaDefaultY=0;
 
+    public boolean stackeable = false;  // Por defecto no se agrupan
+    public int cantidad = 1;            // Cantidad por defecto es 1
+
+
     public void dibujar(Graphics2D g2, PanelJuego panel){
         int screenX = worldX - panel.jugador1.worldX + panel.jugador1.screenX;
         int screenY = worldY - panel.jugador1.worldY + panel.jugador1.screenY;

@@ -2,6 +2,7 @@ package Entidades;
 
 import Main.InputHandler;
 import Main.PanelJuego;
+import Objetos.SuperObjetos;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class Jugador extends Entidad {
     //Dinero del jugador
     public int dinero = 1000;
     //Inventario del jugador
-    public ArrayList<String> inventario = new ArrayList<>();
+    public ArrayList<SuperObjetos> inventario = new ArrayList<>();
     public final int screenX;
     public final int screenY;
 
@@ -191,7 +192,16 @@ public class Jugador extends Entidad {
 
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
-    public void agregarItem(String nombre) {
-        inventario.add(nombre);
+    public void agregarItem(SuperObjetos nuevo) {
+        if (nuevo.stackeable) {
+            for (SuperObjetos obj : inventario) {
+                if (obj.stackeable && obj.nombre != null && obj.nombre.equals(nuevo.nombre)) {
+                    obj.cantidad += nuevo.cantidad;
+                    return;
+                }
+            }
+        }
+        inventario.add(nuevo);
     }
+
 }

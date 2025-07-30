@@ -186,7 +186,7 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         //Dibujar inventario
         if (inventario.activo) {
-            inventario.dibujar(g2);
+            inventario.draw(g2);
         }
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));

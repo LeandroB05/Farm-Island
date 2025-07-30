@@ -134,6 +134,7 @@ public class TileManager {
             tile[42].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Fondo/grass2.png"));
             tile[42].collision = true;
 
+
         }catch(IOException e){
             e.printStackTrace();
         }
