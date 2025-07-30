@@ -20,7 +20,7 @@ public class Inventario{
         int h = panel.tileSize * 15;
 
         // Fondo
-        g2.setColor(new Color(0, 0, 0));
+        g2.setColor(new Color(0, 0, 0, 200));
         g2.fillRoundRect(x, y, w, h, 25, 25);
 
         g2.setColor(Color.white);

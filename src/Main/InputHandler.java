@@ -60,11 +60,12 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
             if (panel.mostrarTiendaComprar){
                 if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada();
             }
-            if (panel.mostrarTiendaVender){
-                if (key == KeyEvent.VK_ENTER){
-
-                };
+            if (panel.mostrarTiendaVender) {
+                if (key == KeyEvent.VK_UP) panel.tiendaVender.moverSeleccion(-1);
+                if (key == KeyEvent.VK_DOWN) panel.tiendaVender.moverSeleccion(1);
+                if (key == KeyEvent.VK_ENTER) panel.tiendaVender.venderSeleccionada();
             }
+
             if (key == KeyEvent.VK_ESCAPE){
                 panel.mostrarDialogo = false;
                 panel.tiendaComprar.desactivar();
