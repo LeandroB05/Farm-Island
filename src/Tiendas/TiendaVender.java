@@ -1,8 +1,6 @@
 package Tiendas;
 
 import Main.PanelJuego;
-import Objetos.Semillas;
-
 import java.awt.*;
 
 public class TiendaVender {
