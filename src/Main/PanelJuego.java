@@ -130,7 +130,6 @@ public class PanelJuego extends JPanel implements Runnable {
         if (pausado) {
             //Hace nada ta pausado :P
         }else{
-            sonido.play();
             jugador1.update();
         }
         //Actualiza npcs
@@ -157,7 +156,7 @@ public class PanelJuego extends JPanel implements Runnable {
         //Dibujar NPC
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {
-             npc[i].dibujar(g2, this);
+                npc[i].dibujar(g2, this);
             }
         }
         //Dibujar el jugador

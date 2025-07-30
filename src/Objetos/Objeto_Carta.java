@@ -3,7 +3,7 @@ package Objetos;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Objeto_Carta extends SuperObjetos{//Esto va ser como una hoja de tutorial //Lo termino alfinal cuanto tengamos gameplay y mensajes
+public class Objeto_Carta extends SuperObjetos{ //Esto va a ser como una hoja de tutorial //Lo termino alfinal cuanto tengamos gameplay y mensajes
     public Objeto_Carta(){
         nombre="Carta";
         solidAreaDefaultX=0;

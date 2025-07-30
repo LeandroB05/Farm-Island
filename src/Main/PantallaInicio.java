@@ -10,10 +10,18 @@ import java.io.IOException;
 public class PantallaInicio extends JPanel {
 
     public BufferedImage casaImagen;
+    private Sound sound; // Instancia para manejar el sonido
 
     public PantallaInicio(ActionListener startListener) {
         this.setLayout(null); // Usamos layout nulo para posicionar elementos manualmente
         this.setBackground(new Color(96, 120, 143)); // Mismo fondo que tu juego
+
+        // Iniciar música del menú
+        sound = new Sound();
+        sound.setFile(1); // 1 = MainMenuMusic.wav
+        sound.play();
+        sound.loop();
+
         //Cargar la img de la casa
         cargarImagen();
         //Posicion de la casa
@@ -25,7 +33,8 @@ public class PantallaInicio extends JPanel {
             this.add(casaLabel); // Añadir casa PRIMERO (queda atrás)
         }
 
-            // Etiqueta para el título del juego
+
+        // Etiqueta para el título del juego
             JLabel titulo = new JLabel("Farm Island", SwingConstants.CENTER);
             titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
             titulo.setForeground(Color.GREEN);
@@ -71,6 +80,11 @@ public class PantallaInicio extends JPanel {
 
         } catch (IOException | IllegalArgumentException e) {
             casaImagen = null;
+        }
+    }
+    public void detenerMusica() {
+        if (sound != null) {
+            sound.stop();
         }
     }
 }
