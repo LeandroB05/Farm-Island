@@ -165,12 +165,11 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         if (mostrarTienda) {
             ventanas.dibujarVentanaTienda(g2);
+            tiendaComprar.dibujar(g2);
+            tiendaComprar.dibujarInformacion(g2);
         }
         if (pausado) {
             ventanas.dibujarPausaVentana(g2);
-        }
-        if (tiendaComprar.estaActiva()) {
-            tiendaComprar.dibujar(g2);
         }
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));

@@ -45,18 +45,18 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 panel.pausado = false;
             }
         } if (panel.mostrarDialogo) {
-            if (key == KeyEvent.VK_ENTER) {
-                panel.mostrarDialogo = false;
-                panel.mostrarTienda = false;
-                panel.interacciones.interaccionActiva=false;
-                panel.tiendaComprar.activa=false;
-            }
+
         }
         if (panel.tiendaComprar.activa) {
             if (key == KeyEvent.VK_UP) panel.tiendaComprar.moverSeleccion(-1);
             if (key == KeyEvent.VK_DOWN) panel.tiendaComprar.moverSeleccion(1);
-            if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada(panel.jugador1);
-            if (key == KeyEvent.VK_ESCAPE) panel.tiendaComprar.desactivar();
+            if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada();
+            if (key == KeyEvent.VK_ESCAPE){
+                panel.tiendaComprar.desactivar();
+                panel.mostrarDialogo = false;
+                panel.pausado = false;
+                panel.interacciones.interaccionActiva=false;
+            }
         }
     }
 

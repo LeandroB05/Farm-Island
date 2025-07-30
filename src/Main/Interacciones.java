@@ -20,11 +20,15 @@ public class Interacciones {
         if (indice != 999 && !panel.mostrarDialogo) {//Solo se muestra si se cumplen los dos
             System.out.println("Interaccion npc");
             switch (indice) {//El case se llena dependiendo el npc
-                case 0:
+                case 0://NPC Comerciante (Vender)
+                    panel.tiendaComprar.activar();
                     panel.mostrarDialogo = true;
                     panel.mostrarTienda = true;
                     panel.repaint();
                     break;
+                    case 1:
+                        System.out.println("Interaccion npc2");
+                        break;//NPC Comerciante 2 (Comprador)
             }
         }
     }

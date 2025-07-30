@@ -8,6 +8,8 @@ public class Objeto_Carta extends SuperObjetos{//Esto va ser como una hoja de tu
         nombre="Carta";
         solidAreaDefaultX=0;
         solidAreaDefaultY=0;
+        solidArea.width = 27;
+        solidArea.height = 24;
         try {
             imagen = ImageIO.read(getClass().getResource("../sprites/objetos/carta.png"));
         }catch (Exception e){
