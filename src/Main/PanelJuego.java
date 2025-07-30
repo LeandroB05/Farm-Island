@@ -12,12 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelJuego extends JPanel implements Runnable {
-    //Estadel juego
+    //Estao del juego
     public boolean pausado=false;
     public boolean mostrarDialogo = false;
     public boolean mostrarTiendaComprar = false;
     public boolean mostrarTiendaVender = false;
     public boolean inventarioAbierto = false;
+    public boolean mostrarDormir = false;
     public boolean accion = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad

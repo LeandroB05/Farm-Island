@@ -1,8 +1,6 @@
 package Tiendas;
 
 import Main.PanelJuego;
-import Objetos.Semillas;
-
 import java.awt.*;
 
 public class TiendaVender {
@@ -21,14 +19,14 @@ public class TiendaVender {
         //Dibuja la letra de la tienda (nombre)
         g2.setColor(new Color(0, 0, 0, 200));
         g2.setColor(Color.white);
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 40));
         g2.drawString("Verduleria el John", x + 20, y -150);
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 20));
         g2.drawString("Tienes algo para vender?", x + 30, y -100);
 
 
         //Dinero del jugador
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
         g2.setColor(Color.white);
         g2.drawString("Dinero actual: "+panel.jugador1.dinero, x + 800, y-180);
 

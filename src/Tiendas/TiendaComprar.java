@@ -33,11 +33,11 @@ public class TiendaComprar {
         //Dibuja la letra de la tienda (nombre)
         g2.setColor(new Color(0, 0, 0, 200));
         g2.setColor(Color.white);
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 40));
         g2.drawString("Tienda de Semillas", x + 20, y -150);
 
         //Lista de semillas
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 20));
         for (int i = 0; i < semillas.size(); i++) {
             Semillas semilla = semillas.get(i);
             int textoY = y + 60 + i * panel.tileSize;
@@ -50,14 +50,14 @@ public class TiendaComprar {
             g2.drawString(semilla.getNombre() + " - $" + semilla.getPrecio(), x + 20, textoY);
         }
         //Dinero del jugador
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
         g2.setColor(Color.white);
         g2.drawString("Dinero actual: "+panel.jugador1.dinero, x + 800, y-180);
         if (fondosInsuficientes) {
             g2.drawString("Fondos insuficientes", panel.tileSize * 2 + 800, panel.tileSize * 7-150);
         }
         //Mensaje
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 20));
         g2.drawString("¡Bienvenido a mi tienda!", x + 30, y -100);
 
     }
@@ -74,7 +74,7 @@ public class TiendaComprar {
         int x = panel.tileSize * 2;
         int y = panel.tileSize * 7+40;
         g2.setColor(Color.white);
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 20));
         switch (seleccion) {
             case 0:
                 //Incrementos de 40 en Y para que este uno abajo del otro
@@ -137,7 +137,6 @@ public class TiendaComprar {
         }else if ((panel.jugador1.dinero - s.getPrecio())<0) {
             fondosInsuficientes=true;
         }
-        //AGREGAR FUNCIONES DE INVENTARIO AQUI (la clase todavia no esta hecha)
     }
 
     //Estados de la tienda

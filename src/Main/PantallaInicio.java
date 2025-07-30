@@ -36,14 +36,14 @@ public class PantallaInicio extends JPanel {
 
         // Etiqueta para el título del juego
             JLabel titulo = new JLabel("Farm Island", SwingConstants.CENTER);
-            titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
+            titulo.setFont(new Font("Pixelify Sans", Font.BOLD, 60));
             titulo.setForeground(Color.GREEN);
             titulo.setBounds(0, 130, 1536, 100); // (x, y, ancho, alto) centrado horizontalmente
             titulo.setOpaque(false);
             this.add(titulo);
 
             JLabel tituloSombra = new JLabel("Farm Island", SwingConstants.CENTER);
-            tituloSombra.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
+            tituloSombra.setFont(new Font("Pixelify Sans", Font.BOLD, 60));
             tituloSombra.setForeground(Color.BLACK);
             tituloSombra.setBounds(5, 135, 1536, 100); // (x, y, ancho, alto) centrado horizontalmente
             tituloSombra.setOpaque(true);
@@ -51,7 +51,7 @@ public class PantallaInicio extends JPanel {
 
             // Botón para iniciar el juego
             JButton botonInicio = new JButton("Iniciar Juego");
-            botonInicio.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+            botonInicio.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
             botonInicio.setBounds(618, 500, 300, 80); // Centrado debajo del título
             botonInicio.setOpaque(true);
             botonInicio.setBackground(Color.ORANGE);
@@ -61,7 +61,7 @@ public class PantallaInicio extends JPanel {
             this.add(botonInicio);
 
             JButton botonSalir = new JButton("Salir");
-            botonSalir.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+            botonSalir.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
             botonSalir.setBounds(618, 600, 300, 80); // Centrado debajo del título
             botonSalir.setOpaque(true);
             botonSalir.setBackground(Color.ORANGE);
