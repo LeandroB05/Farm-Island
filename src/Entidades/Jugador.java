@@ -143,6 +143,14 @@ public class Jugador extends Entidad {
             panel.interacciones.interaccionNPC(indiceNPC);
         }
 
+        if (indiceObjeto!=999){ //Para objetos
+            if (collisionOn) {  //No puede moverse si entra en contacto con el objeto
+                worldX -= dx;
+                worldY -= dy;
+            }
+            panel.interacciones.interaccionObjeto(indiceObjeto);
+        }
+
         // Animación
         spriteCounter++;
         int velocidadAnimacion = idle ? 20 : 10;

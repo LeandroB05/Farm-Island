@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener {  //implements para que pueda leer la accion del jugador
     PanelJuego panel;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, pPressed, iPressed; //booleano para comprobar que se aprieta la tecla
+    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, pPressed; //booleano para comprobar que se aprieta la tecla
     public InputHandler(PanelJuego panel) {
         this.panel = panel;
     }
@@ -17,7 +17,7 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); //retorna el valor de la tecla presionada
 
-        if (!panel.pausado && !panel.mostrarDialogo&&!panel.inventario.activo) {
+        if (!panel.pausado && !panel.mostrarDialogo&&!panel.inventario.activo && !panel.mostrarDormir) {
             if (key == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -71,6 +71,14 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 panel.tiendaVender.desactivar();
                 panel.pausado = false;
                 panel.interacciones.interaccionActiva=false;
+            }
+        }
+        if (panel.mostrarDormir) {
+            if (key == KeyEvent.VK_ESCAPE) {
+                panel.mostrarDormir = false;
+            } else if (key == KeyEvent.VK_ENTER) {
+                panel.tiempo.pasarDia();
+                panel.mostrarDormir = false;
             }
         }
     }
