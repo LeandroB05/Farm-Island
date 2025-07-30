@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class InputHandler implements KeyListener {  //implements para que pueda leer la accion del jugador
     PanelJuego panel;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, pPressed; //booleano para comprobar que se aprieta la tecla
+    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, pPressed, iPressed; //booleano para comprobar que se aprieta la tecla
     public InputHandler(PanelJuego panel) {
         this.panel = panel;
     }
@@ -17,7 +17,7 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); //retorna el valor de la tecla presionada
 
-        if (!panel.pausado && !panel.mostrarDialogo) {
+        if (!panel.pausado && !panel.mostrarDialogo&&!panel.inventario.activo) {
             if (key == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -38,22 +38,37 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
             if (key == KeyEvent.VK_E) {
                 ePressed = true;
             }
+            if (key == KeyEvent.VK_I) {
+                panel.inventario.alternar();
+            }
+
         } else if (panel.pausado) {
             if (key == KeyEvent.VK_P) {
                 pPressed = true;
                 panel.sonido.play();
                 panel.pausado = false;
             }
-        } if (panel.mostrarDialogo) {
-
         }
-        if (panel.tiendaComprar.activa) {
+        else if (panel.inventario.activo) {
+            if (key == KeyEvent.VK_I) {
+                panel.inventario.alternar();
+            }
+        }
+        if (panel.tiendaComprar.activa||panel.tiendaVender.activa) {
             if (key == KeyEvent.VK_UP) panel.tiendaComprar.moverSeleccion(-1);
             if (key == KeyEvent.VK_DOWN) panel.tiendaComprar.moverSeleccion(1);
-            if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada();
+            if (panel.mostrarTiendaComprar){
+                if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada();
+            }
+            if (panel.mostrarTiendaVender){
+                if (key == KeyEvent.VK_ENTER){
+
+                };
+            }
             if (key == KeyEvent.VK_ESCAPE){
-                panel.tiendaComprar.desactivar();
                 panel.mostrarDialogo = false;
+                panel.tiendaComprar.desactivar();
+                panel.tiendaVender.desactivar();
                 panel.pausado = false;
                 panel.interacciones.interaccionActiva=false;
             }
