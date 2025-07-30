@@ -15,6 +15,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean pausado=false;
     public boolean mostrarDialogo = false;
     public boolean mostrarTienda = false;
+    public boolean mostrarDormir = false;
     public boolean accion = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
@@ -170,6 +171,9 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         if (pausado) {
             ventanas.dibujarPausaVentana(g2);
+        }
+        if (mostrarDormir) {
+            ventanas.dibujarVentanaDormir(g2);
         }
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));

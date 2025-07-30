@@ -17,7 +17,7 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); //retorna el valor de la tecla presionada
 
-        if (!panel.pausado && !panel.mostrarDialogo) {
+        if (!panel.pausado && !panel.mostrarDialogo && !panel.mostrarDormir) {
             if (key == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -56,6 +56,14 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 panel.mostrarDialogo = false;
                 panel.pausado = false;
                 panel.interacciones.interaccionActiva=false;
+            }
+        }
+        if (panel.mostrarDormir) {
+            if (key == KeyEvent.VK_ESCAPE) {
+                panel.mostrarDormir = false;
+            } else if (key == KeyEvent.VK_ENTER) {
+                panel.tiempo.pasarDia();
+                panel.mostrarDormir = false;
             }
         }
     }

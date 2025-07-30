@@ -14,6 +14,14 @@ public class Interacciones {
     //Interaccion con npcs
 
     public void interaccionObjeto(int indice){
+        if (indice != 999 && !panel.mostrarDialogo) {
+            switch (indice) {
+                case 1:
+                    System.out.println("Interaccion cama");
+                    panel.mostrarDormir = true;
+                    break;
+            }
+        }
     }
 
     public void interaccionNPC(int indice) {

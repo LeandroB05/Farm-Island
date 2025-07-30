@@ -68,5 +68,24 @@ public class Ventanas {
         g2.setFont(new Font("Comics sans", Font.PLAIN, 80));
         g2.drawString(text, 572, 460); //Se puede sacar la posicion con fomulas exoticas pero no me complique
     }
+
+    public void dibujarVentanaDormir(Graphics2D g2){
+        int x = panel.tileSize * 4;
+        int y = panel.tileSize * 4;
+        int w = panel.screenWidth - (panel.tileSize * 8);
+        int h = panel.tileSize * 10;
+        //Parametros para la ventana
+        Color c = new Color(0, 0, 0, 200);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, w, h, 40, 40);
+        c= new Color(255, 255, 255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
+        //Parametro para el mensaje
+        String text="Presione ENTER para pasar el dia";
+        g2.setFont(new Font("Comics sans", Font.PLAIN, 40));
+        g2.drawString(text, 480, 440);
+    }
 }
 
