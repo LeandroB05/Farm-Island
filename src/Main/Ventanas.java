@@ -122,12 +122,14 @@ public class Ventanas {
     public void mensajeParcela(Graphics2D g2) {
         int x = panel.tileSize;
         int y = panel.tileSize + 20;
+        g2.setColor(Color.white);
         g2.setFont(new Font("Pixelify Sans", Font.BOLD, 20));
         g2.drawString("ESC: cancelar seleccion", x + 30, y+680);
     }
     public void mensajeInventario(Graphics2D g2) {
         int x = panel.tileSize;
         int y = panel.tileSize + 20;
+        g2.setColor(Color.white);
         g2.setFont(new Font("Pixelify Sans", Font.BOLD, 20));
         g2.drawString("I: cerrar inventario", x + 30, y+700);
     }
