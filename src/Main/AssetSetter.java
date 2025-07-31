@@ -15,8 +15,8 @@ public class AssetSetter {//Instancia clases y los coloca en el mapa
         panel.objeto[0].worldX = panel.tileSize*25;
         panel.objeto[0].worldY = panel.tileSize*25;
         panel.objeto[1] = new Objeto_Cama();
-        panel.objeto[1].worldX = panel.tileSize*35;
-        panel.objeto[1].worldY = panel.tileSize*20;
+        panel.objeto[1].worldX = panel.tileSize*38;
+        panel.objeto[1].worldY = panel.tileSize*19;
     }
     public void setNPC(){
         panel.npc[0] = new NPC_Comerciante(panel); //Spawnea npc y su posicion
