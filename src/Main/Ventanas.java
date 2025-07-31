@@ -4,7 +4,7 @@ import java.awt.*;
 //Parametros de ventas para diferentes usos
 public class Ventanas {
     PanelJuego panel;
-    public String dialogoActual="";
+    int seleccionAccion = 0;
     public Ventanas(PanelJuego panel) {
         this.panel = panel;
     }
@@ -85,5 +85,52 @@ public class Ventanas {
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 40));
         g2.drawString(text, 480, 440);
     }
+    public void dibujarVentanaAccion(Graphics2D g2) {
+        if (!panel.interacciones.interaccionActiva) return;
+
+        String[] acciones = {"Plantar", "Regar", "Recoger"};
+        int x = panel.tileSize * 2 + 700;
+        int y = panel.tileSize * 6;
+        int w = 140;
+        int h = acciones.length * 30 + 20;
+
+        // Fondo del cuadro
+        Color fondo = new Color(0, 0, 0, 180);
+        g2.setColor(fondo);
+        g2.fillRoundRect(x, y-20, w+25, h, 15, 15);
+
+        // Dibujar opciones
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 18));
+        for (int i = 0; i < acciones.length; i++) {
+            int textoY = y + 10 + i * 30;
+            if (i == seleccionAccion) {
+                g2.setColor(Color.yellow);
+                g2.fillRect(x + 10, textoY - 20, w, 25);
+                g2.setColor(Color.black);
+            } else {
+                g2.setColor(Color.white);
+            }
+            g2.drawString("Acción: " + acciones[i], x + 15, textoY);
+        }
+    }
+    public void moverSeleccionAccion(int direccion) {
+        String[] acciones = {"Plantar", "Regar", "Recoger"};
+        seleccionAccion += direccion;
+        if (seleccionAccion < 0) seleccionAccion = acciones.length - 1;
+        if (seleccionAccion >= acciones.length) seleccionAccion = 0;
+    }
+    public void mensajeParcela(Graphics2D g2) {
+        int x = panel.tileSize;
+        int y = panel.tileSize + 20;
+        g2.setFont(new Font("Pixelify Sans", Font.BOLD, 20));
+        g2.drawString("ESC: cancelar seleccion", x + 30, y+680);
+    }
+    public void mensajeInventario(Graphics2D g2) {
+        int x = panel.tileSize;
+        int y = panel.tileSize + 20;
+        g2.setFont(new Font("Pixelify Sans", Font.BOLD, 20));
+        g2.drawString("I: cerrar inventario", x + 30, y+700);
+    }
+
 }
 

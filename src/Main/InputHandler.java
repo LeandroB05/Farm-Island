@@ -17,7 +17,7 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); //retorna el valor de la tecla presionada
 
-        if (!panel.pausado && !panel.mostrarDialogo&&!panel.inventario.activo && !panel.mostrarDormir) {
+        if (!panel.pausado && !panel.mostrarDialogo && !panel.mostrarDormir&&!(panel.interacciones.accion==0)) {
             if (key == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -48,16 +48,12 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 panel.sonido.play();
                 panel.pausado = false;
             }
+
         }
-        else if (panel.inventario.activo) {
-            if (key == KeyEvent.VK_I) {
-                panel.inventario.alternar();
-            }
-        }
-        if (panel.tiendaComprar.activa||panel.tiendaVender.activa) {
-            if (key == KeyEvent.VK_UP) panel.tiendaComprar.moverSeleccion(-1);
-            if (key == KeyEvent.VK_DOWN) panel.tiendaComprar.moverSeleccion(1);
-            if (panel.mostrarTiendaComprar){
+        if (panel.tiendaComprar.activa || panel.tiendaVender.activa || panel.mostrarAccionParcela) {
+            if (panel.mostrarTiendaComprar) {
+                if (key == KeyEvent.VK_UP) panel.tiendaComprar.moverSeleccion(-1);
+                if (key == KeyEvent.VK_DOWN) panel.tiendaComprar.moverSeleccion(1);
                 if (key == KeyEvent.VK_ENTER) panel.tiendaComprar.comprarSeleccionada();
             }
             if (panel.mostrarTiendaVender) {
@@ -65,23 +61,36 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 if (key == KeyEvent.VK_DOWN) panel.tiendaVender.moverSeleccion(1);
                 if (key == KeyEvent.VK_ENTER) panel.tiendaVender.venderSeleccionada();
             }
-
-            if (key == KeyEvent.VK_ESCAPE){
-                panel.mostrarDialogo = false;
-                panel.tiendaComprar.desactivar();
-                panel.tiendaVender.desactivar();
-                panel.pausado = false;
-                panel.interacciones.interaccionActiva=false;
+            if (panel.mostrarAccionParcela&&panel.interacciones.accion!=0) {
+                if (key == KeyEvent.VK_UP) panel.ventanas.moverSeleccionAccion(-1);
+                if (key == KeyEvent.VK_DOWN) panel.ventanas.moverSeleccionAccion(1);
+                if (key == KeyEvent.VK_ENTER) {
+                    panel.interacciones.accion = panel.ventanas.seleccionAccion;
+                }
+            }else{
+                if (key == KeyEvent.VK_UP) panel.inventario.moverSeleccionInventario(-1);
+                if (key == KeyEvent.VK_DOWN) panel.inventario.moverSeleccionInventario(1);
+                if (key == KeyEvent.VK_ESCAPE) {
+                    panel.interacciones.accion=-1;
+                }
             }
-        }
-        if (panel.mostrarDormir) {
-            if (key == KeyEvent.VK_ESCAPE) {
-                panel.mostrarDormir = false;
-            } else if (key == KeyEvent.VK_ENTER) {
-                panel.tiempo.pasarDia();
-                panel.mostrarDormir = false;
+                if (key == KeyEvent.VK_ESCAPE) {
+                    panel.mostrarDialogo = false;
+                    panel.tiendaComprar.desactivar();
+                    panel.tiendaVender.desactivar();
+                    panel.mostrarAccionParcela = false;
+                    panel.pausado = false;
+                    panel.interacciones.interaccionActiva = false;
+                }
             }
-        }
+            if (panel.mostrarDormir) {
+                if (key == KeyEvent.VK_ESCAPE) {
+                    panel.mostrarDormir = false;
+                } else if (key == KeyEvent.VK_ENTER) {
+                    panel.tiempo.pasarDia();
+                    panel.mostrarDormir = false;
+                }
+            }
     }
 
     @Override

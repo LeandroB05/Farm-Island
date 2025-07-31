@@ -18,6 +18,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean mostrarTiendaComprar = false;
     public boolean mostrarTiendaVender = false;
     public boolean mostrarDormir = false;
+    public boolean mostrarAccionParcela = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
     final int scale = 3; //escalado de tamano
@@ -51,6 +52,8 @@ public class PanelJuego extends JPanel implements Runnable {
     public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
     //PARCELAS
     public Parcela parcela[] = new Parcela[9];
+    //ACCIONES DE LAS PARCELAS
+    public AccionesParcelas accionesParcelas = new AccionesParcelas(this);
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
     public Entidad npc[] = new Entidad[10];
@@ -186,8 +189,17 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         //Dibujar inventario
         if (inventario.activo) {
-            inventario.draw(g2);
+            inventario.dibujar(g2);
+            ventanas.mensajeInventario(g2);
         }
+        //Dibujar ventana accion de la parcela
+        if (mostrarAccionParcela){
+            ventanas.dibujarVentanaAccion(g2);
+        }
+        if(mostrarAccionParcela&&interacciones.accion==0){
+            ventanas.mensajeParcela(g2);
+        }
+
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));
         g2.setColor(Color.WHITE);

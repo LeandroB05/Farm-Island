@@ -19,11 +19,11 @@ public class TiendaComprar {
         semillas = new ArrayList<>();
 
         // Lista de semillas con nombre y precio
-        semillas.add(new Semillas("Semilla de Zanahoria", 10, 2));
-        semillas.add(new Semillas("Semilla de Rabano", 15, 2));
-        semillas.add(new Semillas("Semilla de Papa", 20, 4));
-        semillas.add(new Semillas("Semilla de Calabaza", 25, 5));
-        semillas.add(new Semillas("Semilla de Coliflor", 30, 6));
+        semillas.add(new Semillas("Semillas de Zanahoria", 10, 2));
+        semillas.add(new Semillas("Semillas de Rabano", 15, 2));
+        semillas.add(new Semillas("Semillas de Papa", 20, 4));
+        semillas.add(new Semillas("Semillas de Calabaza", 25, 5));
+        semillas.add(new Semillas("Semillas de Coliflor", 30, 6));
     }
 
     public void dibujar(Graphics2D g2) {
@@ -130,7 +130,7 @@ public class TiendaComprar {
 
     public void activar() {
         activa = true;
-        seleccion = 0;
+        seleccion = 0;//Reinicia la seleccion
     }
 
     public void desactivar() {

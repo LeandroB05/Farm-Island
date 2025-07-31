@@ -189,21 +189,21 @@ public class  CollisionChecker {
         }
         return indice;
     }
-    public int verificarParcela(Entidad entidad, Parcela[] objetivo){//Revisa si se esta chocando con algo si es asi devuelve el indice del objeto
+    public int verificarParcela(Entidad entidad, Parcela[] parcela){//Revisa si se esta chocando con algo si es asi devuelve el indice del objeto
         int indice=999;                                             //El indice se usa despues para una interaccion entre objeto/npc jugador
-        for(int i = 0; i< panel.parcela.length;i++){
-            if (panel.parcela[i] != null){
+        for(int i = 0; i< parcela.length;i++){
+            if (parcela[i] != null){
                 //Area solida de la entidad (jugador)
                 entidad.solidArea.x = entidad.worldX + entidad.solidArea.x;
                 entidad.solidArea.y = entidad.worldY + entidad.solidArea.y;
-                //Area solida del objeto
-                panel.parcela[i].solidArea.x = panel.parcela[i].worldX + panel.parcela[i].solidArea.x;
-                panel.parcela[i].solidArea.y = panel.parcela[i].worldY + panel.parcela[i].solidArea.y;
+                //Area solida de la parcela
+                parcela[i].solidArea.x = parcela[i].worldX + parcela[i].solidArea.x;
+                parcela[i].solidArea.y = parcela[i].worldY + parcela[i].solidArea.y;
                 switch (entidad.direction) {
                     case "arriba":
                         entidad.solidArea.y = entidad.solidArea.y-entidad.speed;
-                        if (entidad.solidArea.intersects(panel.parcela[i].solidArea)){
-                            if(panel.parcela[i].colision){
+                        if (entidad.solidArea.intersects(parcela[i].solidArea)){
+                            if(parcela[i].colision){
                                 entidad.collisionOn = true;
                             }
                                 indice = i;
@@ -211,8 +211,8 @@ public class  CollisionChecker {
                         break;
                     case "abajo":
                         entidad.solidArea.y = entidad.solidArea.y+entidad.speed;//Metodo intersects revisa si se intersectan (colisionan)
-                        if (entidad.solidArea.intersects(panel.parcela[i].solidArea)){
-                            if(panel.parcela[i].colision){
+                        if (entidad.solidArea.intersects(parcela[i].solidArea)){
+                            if(parcela[i].colision){
                                 entidad.collisionOn = true;
                             }
                                 indice = i;
@@ -220,8 +220,8 @@ public class  CollisionChecker {
                         break;
                     case "izquierda":
                         entidad.solidArea.x = entidad.solidArea.x-entidad.speed;
-                        if (entidad.solidArea.intersects(panel.parcela[i].solidArea)){
-                            if(panel.parcela[i].colision){
+                        if (entidad.solidArea.intersects(parcela[i].solidArea)){
+                            if(parcela[i].colision){
                                 entidad.collisionOn = true;
                             }
                                 indice = i;
@@ -229,8 +229,8 @@ public class  CollisionChecker {
                         break;
                     case "derecha":
                         entidad.solidArea.x = entidad.solidArea.x+entidad.speed;
-                        if (entidad.solidArea.intersects(panel.parcela[i].solidArea)){
-                            if(panel.parcela[i].colision){
+                        if (entidad.solidArea.intersects(parcela[i].solidArea)){
+                            if(parcela[i].colision){
                                 entidad.collisionOn = true;
                             }
                                 indice = i;
@@ -239,8 +239,8 @@ public class  CollisionChecker {
                 }
                 entidad.solidArea.x = entidad.solidAreaDefaultX;
                 entidad.solidArea.y = entidad.solidAreaDefaultY;
-                panel.parcela[i].solidArea.x = panel.parcela[i].solidAreaDefaultX;
-                panel.parcela[i].solidArea.y = panel.parcela[i].solidAreaDefaultY;
+                parcela[i].solidArea.x = parcela[i].solidAreaDefaultX;
+                parcela[i].solidArea.y = parcela[i].solidAreaDefaultY;
             }
         }
         return indice;

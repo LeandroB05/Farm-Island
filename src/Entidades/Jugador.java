@@ -16,6 +16,8 @@ public class Jugador extends Entidad {
     InputHandler inputH;
     //Dinero del jugador
     public int dinero = 1000;
+    //Indices
+    public int indiceParcela;
     //Inventario del jugador
     public ArrayList<SuperObjetos> inventario = new ArrayList<>();
     public final int screenX;
@@ -151,13 +153,15 @@ public class Jugador extends Entidad {
             panel.interacciones.interaccionObjeto(indiceObjeto);
         }
         //Parcela
-        int indiceParcela = panel.hitbox.verificarParcela(this, panel.parcela);
+        indiceParcela = panel.hitbox.verificarParcela(this, panel.parcela);
         if (indiceParcela!=999){ //Para parcelas
             if (collisionOn) {
                 worldX -= dx;
                 worldY -= dy;
             }
             panel.interacciones.interaccionParcela(indiceParcela);
+        }else{
+            panel.mostrarAccionParcela = false;
         }
 
         // Animación
