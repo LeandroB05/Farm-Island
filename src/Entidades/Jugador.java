@@ -130,26 +130,34 @@ public class Jugador extends Entidad {
                 worldY += dy;
             }
         }
-        //Si abre el inventario se queda quieto
         //Verifica si esta tocando algo
-        //Objeto
-        int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
+
         //NPC
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
         if (indiceNPC!=999){
-            if (collisionOn) {  //No puede moverse si entra en contacto con un npc
+            if (collisionOn) { //Evita errores con el posicionamiento del mundo
                 worldX -= dx;
                 worldY -= dy;
             }
             panel.interacciones.interaccionNPC(indiceNPC);
         }
-
+        //Objeto
+        int indiceObjeto = panel.hitbox.verificarObjeto(this, true);
         if (indiceObjeto!=999){ //Para objetos
-            if (collisionOn) {  //No puede moverse si entra en contacto con el objeto
+            if (collisionOn) {
                 worldX -= dx;
                 worldY -= dy;
             }
             panel.interacciones.interaccionObjeto(indiceObjeto);
+        }
+        //Parcela
+        int indiceParcela = panel.hitbox.verificarParcela(this, panel.parcela);
+        if (indiceParcela!=999){ //Para parcelas
+            if (collisionOn) {
+                worldX -= dx;
+                worldY -= dy;
+            }
+            panel.interacciones.interaccionParcela(indiceParcela);
         }
 
         // Animación

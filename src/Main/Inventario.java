@@ -29,7 +29,7 @@ public class Inventario {
         g2.setFont(new Font("Pixelify Sans", Font.BOLD, 20));
         g2.drawString("Inventario", x + 20, y + 30);
 
-        // Lista de ítems
+        // Lista de items
         ArrayList<SuperObjetos> inventario = panel.jugador1.inventario;
         for (int i = 0; i < inventario.size(); i++) {
             SuperObjetos obj = inventario.get(i);

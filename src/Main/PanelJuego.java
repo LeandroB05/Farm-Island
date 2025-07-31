@@ -17,9 +17,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean mostrarDialogo = false;
     public boolean mostrarTiendaComprar = false;
     public boolean mostrarTiendaVender = false;
-    public boolean inventarioAbierto = false;
     public boolean mostrarDormir = false;
-    public boolean accion = false;
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
     final int scale = 3; //escalado de tamano
@@ -50,8 +48,9 @@ public class PanelJuego extends JPanel implements Runnable {
     public TiendaComprar tiendaComprar = new TiendaComprar(this);
     public TiendaVender tiendaVender = new TiendaVender(this);
     //OBJETOS
-    public Semillas semillas[]= new Semillas[50];
     public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
+    //PARCELAS
+    public Parcela parcela[] = new Parcela[9];
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
     public Entidad npc[] = new Entidad[10];
@@ -79,6 +78,7 @@ public class PanelJuego extends JPanel implements Runnable {
         playMusic(0); //llamada a la funcion que reproduce la musica de fondo
         assetSetter.setObjeto();
         assetSetter.setNPC();
+        assetSetter.setParcela();
         pausado=false;
 
     }
@@ -192,7 +192,7 @@ public class PanelJuego extends JPanel implements Runnable {
         g2.setFont(new Font("Arial", Font.BOLD, 20));
         g2.setColor(Color.WHITE);
 
-        String tiempoTexto = String.format("Tiempo: %02d:%02d:%02d", tiempo.getHoras(), tiempo.getMinutos(), tiempo.getSegundos());
+        String tiempoTexto = String.format("Tiempo jugado: %02d:%02d:%02d", tiempo.getHoras(), tiempo.getMinutos(), tiempo.getSegundos());
         g2.drawString(tiempoTexto, 20, 30);
 
         String diaTexto = "Día: " + tiempo.getDiaActual();

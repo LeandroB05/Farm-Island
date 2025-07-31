@@ -19,11 +19,11 @@ public class TiendaComprar {
         semillas = new ArrayList<>();
 
         // Lista de semillas con nombre y precio
-        semillas.add(new Semillas("Semilla de Zanahoria", 10));
-        semillas.add(new Semillas("Semilla de Rabano", 15));
-        semillas.add(new Semillas("Semilla de Papa", 20));
-        semillas.add(new Semillas("Semilla de Calabaza", 25));
-        semillas.add(new Semillas("Semilla de Coliflor", 30));
+        semillas.add(new Semillas("Semilla de Zanahoria", 10, 2));
+        semillas.add(new Semillas("Semilla de Rabano", 15, 2));
+        semillas.add(new Semillas("Semilla de Papa", 20, 4));
+        semillas.add(new Semillas("Semilla de Calabaza", 25, 5));
+        semillas.add(new Semillas("Semilla de Coliflor", 30, 6));
     }
 
     public void dibujar(Graphics2D g2) {
@@ -116,7 +116,7 @@ public class TiendaComprar {
             panel.jugador1.dinero -= semillaSeleccionada.getPrecio();
 
             // Crear copia con nombre válido
-            Semillas copia = new Semillas(semillaSeleccionada.nombre, semillaSeleccionada.getPrecio());
+            Semillas copia = new Semillas(semillaSeleccionada.nombre, semillaSeleccionada.getPrecio(), 0);
             copia.stackeable = true;
             copia.cantidad = 1;
 

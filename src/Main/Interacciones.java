@@ -43,6 +43,24 @@ public class Interacciones {
             }
         }
     }
+    public void interaccionParcela(int indice){
+        if (indice != 999 && !panel.mostrarDialogo) {
+            switch (indice) {
+                case 0:
+                    System.out.println("Interaccion parcela1");
+                    break;
+                    case 1:
+                        System.out.println("Interaccion parcela2");
+                        break;
+                        case 2:
+                            System.out.println("Interaccion parcela3");
+                            break;
+                            case 3:
+                                System.out.println("Interaccion parcela4");
+                                break;
+            }
+        }
+    }
 
 }
 

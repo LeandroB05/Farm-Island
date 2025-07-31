@@ -26,4 +26,34 @@ public class AssetSetter {//Instancia clases y los coloca en el mapa
         panel.npc[1].worldX = panel.tileSize*26;
         panel.npc[1].worldY = panel.tileSize*18;
     }
+    public void setParcela(){
+        panel.parcela[0] = new Parcela();
+        panel.parcela[0].worldX = panel.tileSize*17;
+        panel.parcela[0].worldY = panel.tileSize*42;
+        panel.parcela[1] = new Parcela();
+        panel.parcela[1].worldX = panel.tileSize*17;
+        panel.parcela[1].worldY = panel.tileSize*46;
+        panel.parcela[2] = new Parcela();
+        panel.parcela[2].worldX = panel.tileSize*17;
+        panel.parcela[2].worldY = panel.tileSize*50;
+        panel.parcela[3] = new Parcela();
+        panel.parcela[3].worldX = panel.tileSize*20;
+        panel.parcela[3].worldY = panel.tileSize*42;
+        panel.parcela[4] = new Parcela();
+        panel.parcela[4].worldX = panel.tileSize*20;
+        panel.parcela[4].worldY = panel.tileSize*46;
+        panel.parcela[5] = new Parcela();
+        panel.parcela[5].worldX = panel.tileSize*20;
+        panel.parcela[5].worldY = panel.tileSize*50;
+        panel.parcela[6] = new Parcela();
+        panel.parcela[6].worldX = panel.tileSize*23;
+        panel.parcela[6].worldY = panel.tileSize*42;
+        panel.parcela[7] = new Parcela();
+        panel.parcela[7].worldX = panel.tileSize*23;
+        panel.parcela[7].worldY = panel.tileSize*46;
+        panel.parcela[8] = new Parcela();
+        panel.parcela[8].worldX = panel.tileSize*23;
+        panel.parcela[8].worldY = panel.tileSize*50;
+
+    }
 }
