@@ -84,7 +84,7 @@ public class Jugador extends Entidad {
     }
 
 
-    // Método para remover items del inventario
+    // Metodo para remover items del inventario
     public void removerItem(SuperObjetos item, int cantidad) {
         if(item == null) return;
 
@@ -125,7 +125,7 @@ public class Jugador extends Entidad {
         }
     }
 
-    // Método para cambiar el item seleccionado
+    // Metodo para cambiar lo seleccionado
     public void cambiarItemSeleccionado(int direccion) {
         if(inventario.isEmpty()) return;
 
@@ -157,7 +157,7 @@ public class Jugador extends Entidad {
         }
     }
 
-    // Método para interactuar con el terreno (plantar/cosechar)
+    // Metodo para interactuar con el terreno (Plantar/cosechar)
     public void interactuar() {
         if(panel == null || panel.cultivosActivos == null || panel.mapaCultivos == null) {
             System.out.println("Error: Panel o listas no inicializadas");
@@ -321,7 +321,7 @@ public class Jugador extends Entidad {
         //NPC
         int indiceNPC = panel.hitbox.verificarEntidad(this, panel.npc);
         if (indiceNPC!=999){
-            if (collisionOn) {  //No puede moverse si entra en contacto con un npc
+            if (collisionOn) {  //Asegura la posicion del mundo
                 worldX -= dx;
                 worldY -= dy;
             }
@@ -329,7 +329,7 @@ public class Jugador extends Entidad {
         }
 
         if (indiceObjeto!=999){ //Para objetos
-            if (collisionOn) {  //No puede moverse si entra en contacto con el objeto
+            if (collisionOn) {
                 worldX -= dx;
                 worldY -= dy;
             }

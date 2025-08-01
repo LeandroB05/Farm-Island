@@ -38,17 +38,29 @@ public class TiendaVender {
             var item = panel.jugador1.inventario.get(i);
             int textoY = y + 60 + i * panel.tileSize;
 
-            // Contorno de selección
+            // Dibujar selección
             if (i == seleccion) {
                 g2.setColor(Color.yellow);
                 g2.drawRect(x + 10, textoY - 20, 400, panel.tileSize);
             }
 
+            // Dibujar nombre y cantidad
             g2.setColor(Color.white);
-            int precioVenta = item.precio / 2;
-            g2.drawString(item.nombre + " x" + item.cantidad + " - $" + precioVenta + " c/u", x + 20, textoY);
+            g2.drawString(item.nombre + " x" + item.cantidad, x + 20, textoY);
         }
 
+        // Mostrar precio de venta del ítem seleccionado
+        var seleccionado = panel.jugador1.inventario.get(seleccion);
+        int precioVenta;
+        String nombre = seleccionado.nombre.toUpperCase();
+        g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 33));
+        if (nombre.startsWith("SEMILLA")) {
+            precioVenta = 10;
+            g2.drawString("Precio de venta: " + precioVenta, panel.tileSize * 2 + 620, y + 60);
+        } else {
+            precioVenta = seleccionado.precio;
+            g2.drawString("Precio de venta: " + precioVenta, panel.tileSize * 2 + 620, y + 60);
+        }
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
         g2.drawString("Dinero actual: " + panel.jugador1.dinero, x + 800, y - 180);
     }

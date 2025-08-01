@@ -48,19 +48,40 @@ public class Ventanas {
         g2.drawRoundRect(x+600, y+5, w-10, h-10, 40, 40);
 
     }
-    public void dibujarPausaVentana(Graphics2D g2){
-        int x = panel.tileSize * 4;
-        int y = panel.tileSize * 4;
-        int w = panel.screenWidth - (panel.tileSize * 8);
+    public void dibujarVentanaTienda2(Graphics2D g2){
+        if (!panel.tiendaComprar.activa&&!panel.tiendaVender.activa) return;
+        int x = panel.tileSize * 2;
+        int y = panel.tileSize * 7;
+        int w = panel.screenWidth - (panel.tileSize * 20);
         int h = panel.tileSize * 10;
-        //Parametros para la ventana
-        Color c = new Color(0, 100, 0, 200);
+        Color c = new Color(0, 0, 0, 200);
         g2.setColor(c);
-        g2.fillRoundRect(x, y, w, h, 40, 40);
+        //Ventana izquierda (Seleccion)
+        g2.fillRoundRect(x, y, w-10, h, 40, 40);
+        //Ventana derecha (informacion)
+        g2.fillRoundRect(x+600, y, panel.screenWidth - (panel.tileSize * 25)-10, panel.tileSize * 2-10, 40, 40);
         c= new Color(255, 255, 255);
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5, y+5, w-10, h-10, 40, 40);
+        //Ventana izquierda (Seleccion)
+        g2.drawRoundRect(x, y+5, w-10, h-10, 40, 40);
+        //Ventana derecha (informacion)
+        g2.drawRoundRect(x+600, y+5, panel.screenWidth - (panel.tileSize * 25)-10, panel.tileSize * 2-10, 40, 40);
+
+    }
+    public void dibujarPausaVentana(Graphics2D g2){
+        int x = 572;
+        int y = 460;
+        int w = panel.screenWidth - (panel.tileSize * 20);
+        int h = panel.tileSize * 5;
+        //Parametros para la ventana
+        Color c = new Color(0, 100, 0, 200);
+        g2.setColor(c);
+        g2.fillRoundRect(x-100, y-140, w, h, 40, 40);
+        c= new Color(255, 255, 255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x-100+5, y-140+5, w-10, h-10, 40, 40);
         //Parametro para el mensaje
         String text="PAUSADO";
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 80));
@@ -85,5 +106,6 @@ public class Ventanas {
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 40));
         g2.drawString(text, 480, 440);
     }
+
 }
 

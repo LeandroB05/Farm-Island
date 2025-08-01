@@ -19,9 +19,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean mostrarDialogo = false;
     public boolean mostrarTiendaComprar = false;
     public boolean mostrarTiendaVender = false;
-    public boolean inventarioAbierto = false;
     public boolean mostrarDormir = false;
-    public boolean accion = false;
 
 
     //ajustes de pantalla
@@ -71,7 +69,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public Ventanas ventanas = new Ventanas(this);
     public Interacciones interacciones  = new Interacciones(this);
     //TIEMPO
-    public Tiempo tiempo = new Tiempo();
+    public Tiempo tiempo = new Tiempo(this);
 
 
     public PanelJuego() {
@@ -222,7 +220,7 @@ public class PanelJuego extends JPanel implements Runnable {
             tiendaComprar.dibujarInformacion(g2);
         }
         if (mostrarTiendaVender){
-            ventanas.dibujarVentanaTienda(g2);
+            ventanas.dibujarVentanaTienda2(g2);
             tiendaVender.dibujar(g2);
         }
         if (pausado) {
@@ -238,7 +236,6 @@ public class PanelJuego extends JPanel implements Runnable {
         //Dibujar tiempo y dia en pantalla
         g2.setFont(new Font("Arial", Font.BOLD, 20));
         g2.setColor(Color.WHITE);
-
         String tiempoTexto = String.format("Tiempo: %02d:%02d:%02d", tiempo.getHoras(), tiempo.getMinutos(), tiempo.getSegundos());
         g2.drawString(tiempoTexto, 20, 30);
 

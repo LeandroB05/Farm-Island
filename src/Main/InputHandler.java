@@ -17,7 +17,7 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); //retorna el valor de la tecla presionada
 
-        if (!panel.pausado && !panel.mostrarDialogo&&!panel.inventario.activo && !panel.mostrarDormir) {
+        if (!panel.pausado && !panel.mostrarDialogo && !panel.mostrarDormir) {
             if (key == KeyEvent.VK_W) {
                 upPressed = true;
             }
