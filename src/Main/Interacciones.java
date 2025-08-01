@@ -14,7 +14,6 @@ public class Interacciones {
         if (indice != 999 && !panel.mostrarDialogo) {
             switch (indice) {
                 case 1:
-                    System.out.println("Interaccion cama");
                     panel.mostrarDormir = true;
                     break;
             }

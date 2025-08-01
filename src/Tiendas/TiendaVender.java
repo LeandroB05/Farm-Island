@@ -45,8 +45,8 @@ public class TiendaVender {
             }
 
             g2.setColor(Color.white);
-            int precio = obtenerPrecioVenta(item.nombre);
-            g2.drawString(item.nombre + " x" + item.cantidad + " - $" + precio + " c/u", x + 20, textoY);
+            int precioVenta = item.precio / 2;
+            g2.drawString(item.nombre + " x" + item.cantidad + " - $" + precioVenta + " c/u", x + 20, textoY);
         }
 
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 30));
@@ -65,7 +65,7 @@ public class TiendaVender {
         if (panel.jugador1.inventario.isEmpty()) return;
 
         var item = panel.jugador1.inventario.get(seleccion);
-        int precioVenta = obtenerPrecioVenta(item.nombre);
+        int precioVenta = item.precio / 2;
 
         // Vender solo 1 unidad
         panel.jugador1.dinero += precioVenta;
@@ -79,20 +79,6 @@ public class TiendaVender {
             seleccion = panel.jugador1.inventario.size() - 1;
         }
     }
-
-    private int obtenerPrecioVenta(String nombreObjeto) {
-        if (nombreObjeto == null) return 0; // o algún valor por defecto
-
-        switch (nombreObjeto.toLowerCase()) {
-            case "semilla de zanahoria": return 5;
-            case "semilla de rabano": return 7;
-            case "semilla de papa": return 10;
-            case "semilla de calabaza": return 13;
-            case "semilla de coliflor": return 15;
-            default: return 5;
-        }
-    }
-
 
     public void activar() {
         activa = true;
