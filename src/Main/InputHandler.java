@@ -41,6 +41,17 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
             if (key == KeyEvent.VK_I) {
                 panel.inventario.alternar();
             }
+            // Interactuar (plantar/cosechar)
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    panel.jugador1.interactuar();
+                }
+                // Cambiar item seleccionado
+                if(e.getKeyCode() == KeyEvent.VK_Q) {
+                    panel.jugador1.cambiarItemSeleccionado(-1); // Anterior
+                }
+                if(e.getKeyCode() == KeyEvent.VK_E) {
+                    panel.jugador1.cambiarItemSeleccionado(1); // Siguiente
+                }
 
         } else if (panel.pausado) {
             if (key == KeyEvent.VK_P) {

@@ -78,6 +78,7 @@ public class TileManager {
             tile[21].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/pathBR.png"));
             tile[22] = new Tile();
             tile[22].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/path1.png"));
+            tile[22].setCultivable(true);
             tile[23] = new Tile();
             tile[23].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/fondo/sand1.png"));
             tile[24] = new Tile();
@@ -139,8 +140,36 @@ public class TileManager {
             e.printStackTrace();
         }
     }
+    public boolean esTierraCultivable(int worldCol, int worldRow) {
+        // 1. Verificar que las coordenadas estén dentro del mapa
+        if (worldCol < 0 || worldRow < 0 || worldCol >= panel.maxWorldCol || worldRow >= panel.maxWorldRow) {
+            return false;
+        }
 
+        // 2. Verificar el tile base (suelo)
+        int tileBaseNum = mapaTileNumber[worldCol][worldRow];
 
+        // Si el tile base no existe o no es cultivable
+        if (tileBaseNum < 0 || tileBaseNum >= tile.length || tile[tileBaseNum] == null || !tile[tileBaseNum].cultivable) {
+            return false;
+        }
+
+        // 3. Verificar objetos superpuestos (capa de objetos)
+        int tileObjetoNum = objetoTileNumber[worldCol][worldRow];
+
+        // Si hay un objeto y es collisionable o no cultivable
+        if (tileObjetoNum != 0) {
+            if (tileObjetoNum < 0 || tileObjetoNum >= tile.length || tile[tileObjetoNum] == null) {
+                return false;
+            }
+            if (tile[tileObjetoNum].collision || !tile[tileObjetoNum].cultivable) {
+                return false;
+            }
+        }
+
+        // 5. Si pasó todas las validaciones, es cultivable
+        return true;
+    }
 
     public void loadMap(String filePath, int[][] targetArray){
         try{

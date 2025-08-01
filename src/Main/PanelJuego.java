@@ -10,6 +10,8 @@ import Tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PanelJuego extends JPanel implements Runnable {
     //Estao del juego
@@ -20,6 +22,8 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean inventarioAbierto = false;
     public boolean mostrarDormir = false;
     public boolean accion = false;
+
+
     //ajustes de pantalla
     final int originalTileSize = 16; //tamano de 16x16 de cada cuadro de entidad
     final int scale = 3; //escalado de tamano
@@ -40,7 +44,7 @@ public class PanelJuego extends JPanel implements Runnable {
 
     int FPS = 60;
     //SISTEMA
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     InputHandler inputH = new InputHandler(this); //clase para manejar las acciones del usuario
     Sound sonido = new Sound(); //instanciar la clase sonido
     public CollisionChecker hitbox = new CollisionChecker(this);
@@ -52,6 +56,12 @@ public class PanelJuego extends JPanel implements Runnable {
     //OBJETOS
     public Semillas semillas[]= new Semillas[50];
     public SuperObjetos objeto[] = new SuperObjetos[50];//Cantidad de objetos que se pueden monstrar a la vez
+
+
+    public ArrayList<Semillas> cultivosActivos = new ArrayList<>(); // Lista de cultivos plantados
+    public int[][] mapaCultivos = new int[maxWorldCol][maxWorldRow]; // Mapa de posiciones ocupadas
+
+
     //ENTIDADES
     public Jugador jugador1 = new Jugador(this, inputH);  //instanciar clase Jugador
     public Entidad npc[] = new Entidad[10];
@@ -75,12 +85,24 @@ public class PanelJuego extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        //inicializar el juego
-        playMusic(0); //llamada a la funcion que reproduce la musica de fondo
+        //Primero cargar los assets
         assetSetter.setObjeto();
         assetSetter.setNPC();
-        pausado=false;
+        assetSetter.setSemillas();
 
+        cultivosActivos = new ArrayList<>();
+        mapaCultivos = new int[maxWorldCol][maxWorldRow];
+        // Inicializar a 0
+        for(int i = 0; i < maxWorldCol; i++) {
+            Arrays.fill(mapaCultivos[i], 0);
+        }
+
+        //Inicializar sistemas que dependen de los assets
+        tiendaComprar.inicializarTienda();
+
+        //Resto de inicialización
+        playMusic(0);
+        pausado = false;
     }
 
     public void startGameThread() {
@@ -88,6 +110,18 @@ public class PanelJuego extends JPanel implements Runnable {
         gameThread = new Thread(this); //estamos pasandole la clase PanelJuego a este objeto, instanciando el hilo(thread)
         gameThread.start();
 
+    }
+
+    public void mostrarTiendaComprar() {
+        // Asegurarse que las semillas están cargadas
+        if (tiendaComprar.semillasDisponibles.isEmpty()) {
+            tiendaComprar.inicializarTienda();
+        }
+
+        tiendaComprar.activa = true;
+        tiendaComprar.seleccion = 0;
+        tiendaComprar.fondosInsuficientes = false;
+        pausado = true;
     }
 
     @Override
@@ -131,6 +165,10 @@ public class PanelJuego extends JPanel implements Runnable {
         if (pausado) {
             //Hace nada ta pausado :P
         }else{
+            // Actualizar cultivos
+            for(Semillas cultivo : cultivosActivos) {
+                cultivo.actualizarCrecimiento(tiempo.getDiaActual());
+            }
             jugador1.update();
         }
         //Actualiza npcs
@@ -154,6 +192,15 @@ public class PanelJuego extends JPanel implements Runnable {
                 objeto[i].dibujar(g2, this);
             }
         }
+        //Dibujar cultivos
+        for(Semillas cultivo : cultivosActivos) {
+            if(cultivo.isPlantada()) {
+                int screenX = cultivo.getPosicionPlantada()[0] * tileSize - jugador1.worldX + jugador1.screenX;
+                int screenY = cultivo.getPosicionPlantada()[1] * tileSize - jugador1.worldY + jugador1.screenY;
+                g2.drawImage(cultivo.getImagenActual(), screenX, screenY, tileSize, tileSize, null);
+            }
+        }
+
         //Dibujar NPC
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {

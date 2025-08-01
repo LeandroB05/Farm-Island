@@ -3,6 +3,7 @@ package Entidades;
 import Main.InputHandler;
 import Main.PanelJuego;
 import Objetos.SuperObjetos;
+import Objetos.Semillas;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Jugador extends Entidad {
 
@@ -18,8 +20,17 @@ public class Jugador extends Entidad {
     public int dinero = 1000;
     //Inventario del jugador
     public ArrayList<SuperObjetos> inventario = new ArrayList<>();
+
+    public SuperObjetos itemSeleccionado;
+    public int indiceItemSeleccionado = 0;
+
     public final int screenX;
     public final int screenY;
+
+    // Control de tiempo para mostrar el ítem
+    public long tiempoMostradoItem = 0;
+    public final long TIEMPO_VISIBILIDAD_ITEM = 3000; // 3 segundos en milisegundos
+    public boolean mostrarInfoItem = true; // Controla si se muestra la info
 
     public Jugador(PanelJuego panel, InputHandler inputH) {
         super(panel);
@@ -40,6 +51,179 @@ public class Jugador extends Entidad {
         getPlayerImage(); //imagenes
     }
 
+    public void agregarItem(SuperObjetos nuevo) {
+        if(nuevo == null) {
+            System.out.println("Intento de agregar item nulo");
+            return;
+        }
+
+        // Verificar si el item es stackeable y ya existe en el inventario
+        if(nuevo.stackeable) {
+            for(SuperObjetos item : inventario) {
+                if(item != null && item.nombre != null && item.nombre.equals(nuevo.nombre)) {
+                    // Verificar si son del mismo tipo exacto
+                    if(item.getClass() == nuevo.getClass()) {
+                        item.cantidad += nuevo.cantidad;
+                        System.out.println("Stackeado: " + item.nombre + " x" + item.cantidad);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Si no es stackeable o no encontró stack existente
+        if(nuevo.cantidad <= 0) nuevo.cantidad = 1; // Asegurar cantidad mínima
+        inventario.add(nuevo);
+        System.out.println("Nuevo item agregado: " + nuevo.nombre + " x" + nuevo.cantidad);
+
+        // Seleccionar automáticamente si es el primer item
+        if(itemSeleccionado == null && !inventario.isEmpty()) {
+            itemSeleccionado = inventario.get(0);
+            indiceItemSeleccionado = 0;
+        }
+    }
+
+
+    // Método para remover items del inventario
+    public void removerItem(SuperObjetos item, int cantidad) {
+        if(item == null) return;
+
+        if(item.stackeable) {
+            for(int i = 0; i < inventario.size(); i++) {
+                SuperObjetos inventarioItem = inventario.get(i);
+                if(inventarioItem.nombre.equals(item.nombre)) {
+                    inventarioItem.cantidad -= cantidad;
+
+                    if(inventarioItem.cantidad <= 0) {
+                        inventario.remove(i);
+                        // Ajustar el índice seleccionado si es necesario
+                        if(indiceItemSeleccionado >= inventario.size()) {
+                            indiceItemSeleccionado = Math.max(0, inventario.size() - 1);
+                        }
+                        // Actualizar item seleccionado
+                        if(!inventario.isEmpty()) {
+                            itemSeleccionado = inventario.get(indiceItemSeleccionado);
+                        } else {
+                            itemSeleccionado = null;
+                        }
+                    }
+                    return;
+                }
+            }
+        } else {
+            inventario.remove(item);
+            // Ajustar el índice seleccionado si es necesario
+            if(indiceItemSeleccionado >= inventario.size()) {
+                indiceItemSeleccionado = Math.max(0, inventario.size() - 1);
+            }
+            // Actualizar item seleccionado
+            if(!inventario.isEmpty()) {
+                itemSeleccionado = inventario.get(indiceItemSeleccionado);
+            } else {
+                itemSeleccionado = null;
+            }
+        }
+    }
+
+    // Método para cambiar el item seleccionado
+    public void cambiarItemSeleccionado(int direccion) {
+        if(inventario.isEmpty()) return;
+
+        int intentos = 0;
+        int maxIntentos = inventario.size(); // Para evitar bucles infinitos
+
+        do {
+            indiceItemSeleccionado += direccion;
+
+            // Ajustar índices si se pasa de los límites
+            if(indiceItemSeleccionado < 0) {
+                indiceItemSeleccionado = inventario.size() - 1;
+            } else if(indiceItemSeleccionado >= inventario.size()) {
+                indiceItemSeleccionado = 0;
+            }
+
+            itemSeleccionado = inventario.get(indiceItemSeleccionado);
+            intentos++;
+
+            // Salir si encontramos un item con cantidad > 0 o si hemos revisado todos
+        } while((itemSeleccionado.cantidad <= 0 || !itemSeleccionado.stackeable) && intentos < maxIntentos);
+
+        // Si no hay items válidos, seleccionar null
+        if(itemSeleccionado.cantidad <= 0 || !itemSeleccionado.stackeable) {
+            itemSeleccionado = null;
+        } else {
+            tiempoMostradoItem = System.currentTimeMillis();
+            mostrarInfoItem = true;
+        }
+    }
+
+    // Método para interactuar con el terreno (plantar/cosechar)
+    public void interactuar() {
+        if(panel == null || panel.cultivosActivos == null || panel.mapaCultivos == null) {
+            System.out.println("Error: Panel o listas no inicializadas");
+            return;
+        }
+
+        int tileX = (worldX + getFrenteX()) / panel.tileSize;
+        int tileY = (worldY + getFrenteY()) / panel.tileSize;
+
+        // 1. Verificar cosecha
+        Iterator<Semillas> iterator = panel.cultivosActivos.iterator();
+        while(iterator.hasNext()) {
+            Semillas cultivo = iterator.next();
+            if(cultivo != null) {
+                int[] pos = cultivo.getPosicionPlantada();
+                if(pos != null && pos.length == 2 && pos[0] == tileX && pos[1] == tileY) {
+                    if(cultivo.estaListaParaCosechar()) {
+                        SuperObjetos producto = cultivo.cosechar();
+                        if(producto != null) {
+                            producto.stackeable = true; // Asegurar que sea stackeable
+                            producto.cantidad = 1; // Cantidad base
+                            agregarItem(producto);
+                            iterator.remove();
+                            panel.mapaCultivos[tileX][tileY] = 0;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. Verificar si puede plantar
+        if(itemSeleccionado != null && itemSeleccionado instanceof Semillas &&
+                itemSeleccionado.cantidad > 0) {
+
+            Semillas semilla = (Semillas) itemSeleccionado;
+            if(panel.tileM != null && panel.tileM.esTierraCultivable(tileX, tileY) &&
+                    panel.mapaCultivos[tileX][tileY] == 0) {
+
+                Semillas nuevaPlanta = semilla.copiar();
+                if(nuevaPlanta != null) {
+                    nuevaPlanta.plantar(panel.tiempo.getDiaActual(), tileX, tileY);
+                    panel.cultivosActivos.add(nuevaPlanta);
+                    panel.mapaCultivos[tileX][tileY] = 1;
+                    removerItem(semilla, 1);
+                }
+            }
+        }
+    }
+
+    // Métodos auxiliares para determinar la posición frontal
+    private int getFrenteX() {
+        switch(direction) {
+            case "izquierda": return -panel.tileSize;
+            case "derecha": return panel.tileSize;
+            default: return 0;
+        }
+    }
+
+    private int getFrenteY() {
+        switch(direction) {
+            case "arriba": return -panel.tileSize;
+            case "abajo": return panel.tileSize;
+            default: return 0;
+        }
+    }
 
 
     public void setDefaultValues(){
@@ -152,6 +336,11 @@ public class Jugador extends Entidad {
             panel.interacciones.interaccionObjeto(indiceObjeto);
         }
 
+        // Ocultar automáticamente después del tiempo definido
+        if(mostrarInfoItem && System.currentTimeMillis() - tiempoMostradoItem > TIEMPO_VISIBILIDAD_ITEM) {
+            mostrarInfoItem = false;
+        }
+
         // Animación
         spriteCounter++;
         int velocidadAnimacion = idle ? 20 : 10;
@@ -189,19 +378,34 @@ public class Jugador extends Entidad {
                 else if (spriteNum == 4) imagen = left4;
             }
         }
+        if(itemSeleccionado != null && mostrarInfoItem) {
+            // Coordenadas y dimensiones del fondo
+            int fondoX = screenX;
+            int fondoY = screenY - 40;
+            int fondoAncho = 200;
+            int fondoAlto = 40;
+
+            // Dibujar fondo
+            g2.setColor(new Color(0, 0, 0, 100));
+            g2.fillRect(fondoX, fondoY, fondoAncho, fondoAlto);
+
+            // Dibujar borde
+            g2.setColor(Color.WHITE);
+            g2.drawRect(fondoX, fondoY, fondoAncho, fondoAlto);
+
+            // Dibujar texto
+            g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 12));
+            g2.drawString("Seleccionado: " + itemSeleccionado.nombre, screenX + 5, screenY - 25);
+
+            if(itemSeleccionado instanceof Semillas) {
+                Semillas semilla = (Semillas)itemSeleccionado;
+                g2.drawString("Días crecimiento: " + semilla.getDiasParaCrecer(),
+                        screenX + 5, screenY - 10);
+            }
+        }
 
         g2.drawImage(imagen, screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
-    public void agregarItem(SuperObjetos nuevo) {
-        if (nuevo.stackeable) {
-            for (SuperObjetos obj : inventario) {
-                if (obj.stackeable && obj.nombre != null && obj.nombre.equals(nuevo.nombre)) {
-                    obj.cantidad += nuevo.cantidad;
-                    return;
-                }
-            }
-        }
-        inventario.add(nuevo);
-    }
+
 
 }
