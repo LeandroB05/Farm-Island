@@ -372,6 +372,9 @@ public class TileManager {
             tile[119] = new Tile();
             tile[119].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Granja/Suelo.png"));
             tile[119].collision = false;
+            tile[120] = new Tile();
+            tile[120].imagen = ImageIO.read(getClass().getResourceAsStream("../Sprites/Estructuras/Granja/Suelo.png"));
+            tile[120].collision = true;
 
         }catch(IOException e){
             e.printStackTrace();
