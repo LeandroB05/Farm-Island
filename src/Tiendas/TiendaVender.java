@@ -8,6 +8,7 @@ public class TiendaVender {
     int seleccion = 0;
     public boolean activa = false;
     public boolean sinObjetosParaVender = false;
+    int precioVenta;
 
     public TiendaVender(PanelJuego panel) {
         this.panel = panel;
@@ -51,7 +52,6 @@ public class TiendaVender {
 
         // Mostrar precio de venta del ítem seleccionado
         var seleccionado = panel.jugador1.inventario.get(seleccion);
-        int precioVenta;
         String nombre = seleccionado.nombre.toUpperCase();
         g2.setFont(new Font("Pixelify Sans", Font.PLAIN, 33));
         if (nombre.startsWith("SEMILLA")) {
@@ -77,7 +77,6 @@ public class TiendaVender {
         if (panel.jugador1.inventario.isEmpty()) return;
 
         var item = panel.jugador1.inventario.get(seleccion);
-        int precioVenta = item.precio / 2;
 
         // Vender solo 1 unidad
         panel.jugador1.dinero += precioVenta;

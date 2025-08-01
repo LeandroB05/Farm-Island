@@ -17,7 +17,7 @@ public class Jugador extends Entidad {
 
     InputHandler inputH;
     //Dinero del jugador
-    public int dinero = 1000;
+    public int dinero = 100;
     //Inventario del jugador
     public ArrayList<SuperObjetos> inventario = new ArrayList<>();
 

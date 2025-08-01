@@ -52,7 +52,9 @@ public class InputHandler implements KeyListener {  //implements para que pueda 
                 if(e.getKeyCode() == KeyEvent.VK_E) {
                     panel.jugador1.cambiarItemSeleccionado(1); // Siguiente
                 }
-
+            if (key == KeyEvent.VK_ESCAPE) {
+                panel.mostrarCarta = false;
+            }
         } else if (panel.pausado) {
             if (key == KeyEvent.VK_P) {
                 pPressed = true;

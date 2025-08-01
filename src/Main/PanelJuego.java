@@ -20,6 +20,7 @@ public class PanelJuego extends JPanel implements Runnable {
     public boolean mostrarTiendaComprar = false;
     public boolean mostrarTiendaVender = false;
     public boolean mostrarDormir = false;
+    public boolean mostrarCarta = false;
 
 
     //ajustes de pantalla
@@ -228,6 +229,9 @@ public class PanelJuego extends JPanel implements Runnable {
         }
         if (mostrarDormir) {
             ventanas.dibujarVentanaDormir(g2);
+        }
+        if (mostrarCarta) {
+            ventanas.dibujarVentanaCarta(g2);
         }
         //Dibujar inventario
         if (inventario.activo) {

@@ -96,7 +96,7 @@ public class TiendaComprar {
         // Mostrar información dinámica basada en la semilla seleccionada
         g2.drawString(semilla.getNombre().replace("Semilla de ", ""), x + 650, y + 40);
         g2.drawString("Tiempo crecimiento: " + semilla.getDiasParaCrecer() + " días", x + 650, y + 80);
-        g2.drawString("Valor cosecha: $" + semilla.getPrecio(), x + 650, y + 120);
+        g2.drawString("Valor cosecha: $" + semilla.getPrecio()*2, x + 650, y + 120);
         g2.drawString(semilla.getDescripcion(), x + 650, y + 160);
     }
 
